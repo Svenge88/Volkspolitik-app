@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missstandsradar - Volkspolitik.de</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card { animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .pulse { animation: pulse 2s infinite; }
+        .hidden { display: none; }
+        .tab-active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    </style>
+</head>
+<body class="p-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Back Button -->
+        <a href="index.html" class="inline-block bg-white text-purple-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg hover:shadow-xl transition-all">
+            ← Zurück zur Startseite
+        </a>
+
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-red-600 to-red-800 text-white p-8 rounded-2xl text-center mb-8 shadow-2xl">
+            <div class="text-6xl mb-4">🚨</div>
+            <h1 class="text-4xl font-bold mb-2">Missstandsradar</h1>
+            <p class="text-xl opacity-90">Was in Deutschland WIRKLICH schief läuft</p>
+            <p class="text-sm mt-2 opacity-75">Fakten statt Schönreden</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex flex-wrap gap-2 mb-6">
+            <button onclick="showTab('pflege')" id="tab-pflege" class="tab-btn flex-1 min-w-[100px] px-4 py-3 rounded-xl font-bold tab-active shadow-lg">
+                🏥 Pflege
+            </button>
+            <button onclick="showTab('bildung')" id="tab-bildung" class="tab-btn flex-1 min-w-[100px] px-4 py-3 rounded-xl font-bold bg-white shadow-lg">
+                🏫 Bildung
+            </button>
+            <button onclick="showTab('wohnen')" id="tab-wohnen" class="tab-btn flex-1 min-w-[100px] px-4 py-3 rounded-xl font-bold bg-white shadow-lg">
+                🏠 Wohnen
+            </button>
+            <button onclick="showTab('armut')" id="tab-armut" class="tab-btn flex-1 min-w-[100px] px-4 py-3 rounded-xl font-bold bg-white shadow-lg">
+                💸 Armut
+            </button>
+            <button onclick="showTab('infrastruktur')" id="tab-infrastruktur" class="tab-btn flex-1 min-w-[100px] px-4 py-3 rounded-xl font-bold bg-white shadow-lg">
+                🚂 Infrastruktur
+            </button>
+        </div>
+
+        <!-- PFLEGE -->
+        <div id="content-pflege" class="tab-content">
+            <div class="bg-gradient-to-r from-red-500 to-red-600 text-white p-8 rounded-2xl text-center mb-6 pulse shadow-2xl">
+                <h2 class="text-4xl font-bold mb-2">🏥 PFLEGE-KATASTROPHE</h2>
+                <p class="text-6xl font-bold my-4">500.000</p>
+                <p class="text-xl">Pflegekräfte fehlen bis 2030</p>
+            </div>
+
+            <div class="grid gap-4">
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-red-600 mb-4">😱 Die harte Realität</h3>
+                    <div class="space-y-3">
+                        <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                            <p class="font-bold">1 Pfleger : 13 Patienten</p>
+                            <p class="text-sm text-gray-600">Deutschland - in Skandinavien: 1:5!</p>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                            <p class="font-bold">2.200€ Einstiegsgehalt</p>
+                            <p class="text-sm text-gray-600">Für einen der härtesten Jobs überhaupt</p>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                            <p class="font-bold">40% verlassen den Beruf</p>
+                            <p class="text-sm text-gray-600">Innerhalb der ersten 5 Jahre - Burnout!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-purple-600 mb-4">💡 Was helfen würde</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Mindestgehalt 4.000€ brutto</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Verbindliche Personalschlüssel</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Ausbildungsoffensive starten</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Bürokratie massiv reduzieren</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- BILDUNG -->
+        <div id="content-bildung" class="tab-content hidden">
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 rounded-2xl text-center mb-6 pulse shadow-2xl">
+                <h2 class="text-4xl font-bold mb-2">🏫 BILDUNGS-NOTSTAND</h2>
+                <p class="text-6xl font-bold my-4">40.000</p>
+                <p class="text-xl">Lehrer fehlen JETZT</p>
+            </div>
+
+            <div class="grid gap-4">
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-blue-600 mb-4">😱 Die harte Realität</h3>
+                    <div class="space-y-3">
+                        <div class="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-500">
+                            <p class="font-bold">Platz 16 von 21</p>
+                            <p class="text-sm text-gray-600">PISA-Ranking - wir fallen immer weiter</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-500">
+                            <p class="font-bold">20% können nicht richtig lesen</p>
+                            <p class="text-sm text-gray-600">Jedes 5. Kind nach der Grundschule!</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-500">
+                            <p class="font-bold">Schulgebäude verfallen</p>
+                            <p class="text-sm text-gray-600">50 Mrd € Sanierungsstau</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-500">
+                            <p class="font-bold">Digitalisierung: Steinzeit</p>
+                            <p class="text-sm text-gray-600">WLAN? Tablets? In den meisten Schulen Fehlanzeige</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-purple-600 mb-4">💡 Was helfen würde</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Bildung ist BUNDESSACHE (nicht 16 Länder!)</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Lehrer besser bezahlen</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Digitalisierung sofort!</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Kleinere Klassen (max. 20 Schüler)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- WOHNEN -->
+        <div id="content-wohnen" class="tab-content hidden">
+            <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-8 rounded-2xl text-center mb-6 pulse shadow-2xl">
+                <h2 class="text-4xl font-bold mb-2">🏠 WOHNUNGS-KRISE</h2>
+                <p class="text-6xl font-bold my-4">700.000</p>
+                <p class="text-xl">Wohnungen fehlen</p>
+            </div>
+
+            <div class="grid gap-4">
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-orange-600 mb-4">😱 Die harte Realität</h3>
+                    <div class="space-y-3">
+                        <div class="bg-orange-50 p-4 rounded-xl border-l-4 border-orange-500">
+                            <p class="font-bold">+60% Mieten in 10 Jahren</p>
+                            <p class="text-sm text-gray-600">In Großstädten - Löhne: nur +25%</p>
+                        </div>
+                        <div class="bg-orange-50 p-4 rounded-xl border-l-4 border-orange-500">
+                            <p class="font-bold">50% des Einkommens für Miete</p>
+                            <p class="text-sm text-gray-600">In München, Frankfurt, Berlin normal!</p>
+                        </div>
+                        <div class="bg-orange-50 p-4 rounded-xl border-l-4 border-orange-500">
+                            <p class="font-bold">Sozialwohnungen verschwinden</p>
+                            <p class="text-sm text-gray-600">1990: 3 Mio → Heute: 1 Mio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-purple-600 mb-4">💡 Was helfen würde</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> 400.000 neue Wohnungen pro Jahr</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Echte Mietpreisbremse</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Sozialwohnungsbau fördern</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Spekulationen stoppen</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ARMUT -->
+        <div id="content-armut" class="tab-content hidden">
+            <div class="bg-gradient-to-r from-gray-700 to-gray-800 text-white p-8 rounded-2xl text-center mb-6 pulse shadow-2xl">
+                <h2 class="text-4xl font-bold mb-2">💸 ARMUTS-SKANDAL</h2>
+                <p class="text-6xl font-bold my-4">14 Mio</p>
+                <p class="text-xl">Menschen in Armut - in Deutschland!</p>
+            </div>
+
+            <div class="grid gap-4">
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-gray-700 mb-4">😱 Die harte Realität</h3>
+                    <div class="space-y-3">
+                        <div class="bg-gray-100 p-4 rounded-xl border-l-4 border-gray-500">
+                            <p class="font-bold">2,8 Mio Kinder in Armut</p>
+                            <p class="text-sm text-gray-600">Jedes 5. Kind - im "reichen" Deutschland!</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-xl border-l-4 border-gray-500">
+                            <p class="font-bold">1.000 € Tafel-Besucher pro Tag</p>
+                            <p class="text-sm text-gray-600">Mehr als doppelt so viele wie vor 5 Jahren</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-xl border-l-4 border-gray-500">
+                            <p class="font-bold">Altersarmut explodiert</p>
+                            <p class="text-sm text-gray-600">Durchschnittsrente: 1.100€ (Frauen: 800€!)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-yellow-400 to-yellow-300 text-gray-900 p-6 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold mb-4">🤯 Der Kontrast</h3>
+                    <p class="text-lg mb-2">Während 14 Mio arm sind:</p>
+                    <p class="text-3xl font-bold">Top 1% besitzen 35% des Vermögens!</p>
+                    <p class="text-sm mt-2">Das sind über 4 BILLIONEN Euro bei 800.000 Menschen.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- INFRASTRUKTUR -->
+        <div id="content-infrastruktur" class="tab-content hidden">
+            <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-8 rounded-2xl text-center mb-6 pulse shadow-2xl">
+                <h2 class="text-4xl font-bold mb-2">🚂 INFRASTRUKTUR-CHAOS</h2>
+                <p class="text-6xl font-bold my-4">50%</p>
+                <p class="text-xl">der Züge unpünktlich</p>
+            </div>
+
+            <div class="grid gap-4">
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-purple-600 mb-4">😱 Die harte Realität</h3>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 p-4 rounded-xl border-l-4 border-purple-500">
+                            <p class="font-bold">Deutsche Bahn: 50% verspätet</p>
+                            <p class="text-sm text-gray-600">Schweiz: 95% pünktlich - wie machen die das?</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-xl border-l-4 border-purple-500">
+                            <p class="font-bold">4.000 marode Brücken</p>
+                            <p class="text-sm text-gray-600">Einige dürfen LKWs nicht mehr befahren!</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-xl border-l-4 border-purple-500">
+                            <p class="font-bold">Internet-Wüste</p>
+                            <p class="text-sm text-gray-600">30% ohne schnelles Internet (unter 50 Mbit)</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-xl border-l-4 border-purple-500">
+                            <p class="font-bold">Straßen-Stau</p>
+                            <p class="text-sm text-gray-600">745.000 Stunden Stau pro Jahr - nur A-Bahnen!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-purple-600 mb-4">💡 Was helfen würde</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> 100 Mrd € Investitionspaket</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Bahn verstaatlichen & modernisieren</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Glasfaser für ALLE bis 2028</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Brücken-Sofortprogramm</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-white rounded-2xl p-8 mt-8 text-center shadow-xl">
+            <h3 class="text-2xl font-bold text-purple-600 mb-2">💜 Volkspolitik.de</h3>
+            <p class="text-gray-600 mb-4">Die Wahrheit tut weh - aber nur so ändert sich was!</p>
+            <p class="text-sm text-gray-500">Alle Zahlen aus offiziellen Quellen (Destatis, Bundesregierung, Studien)</p>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            // Remove active from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('bg-white');
+            });
+            
+            // Show selected content
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            // Activate tab
+            const activeTab = document.getElementById('tab-' + tabName);
+            activeTab.classList.add('tab-active');
+            activeTab.classList.remove('bg-white');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

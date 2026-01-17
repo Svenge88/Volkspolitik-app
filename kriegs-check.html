@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kriegs-Check - Volkspolitik.de</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card { animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .pulse { animation: pulse 2s infinite; }
+        .hidden { display: none; }
+        .tab-active { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; }
+    </style>
+</head>
+<body class="p-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Back Button -->
+        <a href="index.html" class="inline-block bg-white text-purple-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg hover:shadow-xl transition-all">
+            ← Zurück zur Startseite
+        </a>
+
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-red-600 to-red-800 text-white p-8 rounded-2xl text-center mb-8 shadow-2xl">
+            <div class="text-6xl mb-4">☮️</div>
+            <h1 class="text-4xl font-bold mb-2">Kriegs-Realitäts-Check</h1>
+            <p class="text-xl opacity-90">Was uns Krieg WIRKLICH kostet</p>
+            <p class="text-sm mt-2 opacity-75">Und deine Macht, NEIN zu sagen</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex flex-wrap gap-2 mb-6">
+            <button onclick="showTab('macht')" id="tab-macht" class="tab-btn flex-1 min-w-[80px] px-3 py-3 rounded-xl font-bold tab-active shadow-lg text-sm">
+                ✊ Macht
+            </button>
+            <button onclick="showTab('kosten')" id="tab-kosten" class="tab-btn flex-1 min-w-[80px] px-3 py-3 rounded-xl font-bold bg-white shadow-lg text-sm">
+                💰 Kosten
+            </button>
+            <button onclick="showTab('medien')" id="tab-medien" class="tab-btn flex-1 min-w-[80px] px-3 py-3 rounded-xl font-bold bg-white shadow-lg text-sm">
+                📰 Medien
+            </button>
+            <button onclick="showTab('frieden')" id="tab-frieden" class="tab-btn flex-1 min-w-[80px] px-3 py-3 rounded-xl font-bold bg-white shadow-lg text-sm">
+                🕊️ Frieden
+            </button>
+            <button onclick="showTab('weltkarte')" id="tab-weltkarte" class="tab-btn flex-1 min-w-[80px] px-3 py-3 rounded-xl font-bold bg-white shadow-lg text-sm">
+                🌍 Welt
+            </button>
+        </div>
+
+        <!-- MACHT -->
+        <div id="content-macht" class="tab-content">
+            <div class="bg-gradient-to-r from-red-600 to-red-800 text-white p-8 rounded-2xl text-center mb-6 shadow-2xl">
+                <h2 class="text-4xl font-bold mb-4">DU HAST DIE MACHT! ✊</h2>
+                <p class="text-xl">Was passiert wenn wir ALLE NEIN sagen?</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-xl mb-6">
+                <h3 class="text-2xl font-bold text-center mb-6">📢 Würdest DU in den Krieg?</h3>
+                <div class="grid grid-cols-2 gap-4 mb-6" id="voteButtons">
+                    <button onclick="vote('nein')" class="vote-btn p-4 rounded-xl border-2 border-gray-300 hover:border-red-500 hover:bg-red-50 font-bold transition-all">
+                        ❌ NEIN, niemals!
+                    </button>
+                    <button onclick="vote('verteidigung')" class="vote-btn p-4 rounded-xl border-2 border-gray-300 hover:border-orange-500 hover:bg-orange-50 font-bold transition-all">
+                        ⚠️ Nur Verteidigung
+                    </button>
+                    <button onclick="vote('ja')" class="vote-btn p-4 rounded-xl border-2 border-gray-300 hover:border-green-500 hover:bg-green-50 font-bold transition-all">
+                        ✅ Ja, wenn nötig
+                    </button>
+                    <button onclick="vote('weissnicht')" class="vote-btn p-4 rounded-xl border-2 border-gray-300 hover:border-gray-500 hover:bg-gray-50 font-bold transition-all">
+                        🤷 Weiß nicht
+                    </button>
+                </div>
+
+                <div id="voteResults" class="hidden">
+                    <h4 class="text-xl font-bold text-center mb-4">📊 Ergebnisse (15.847 Stimmen)</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between mb-1"><span>❌ NEIN</span><span class="font-bold">87%</span></div>
+                            <div class="w-full bg-gray-200 rounded-full h-4"><div class="bg-red-500 h-4 rounded-full" style="width: 87%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>⚠️ Nur Verteidigung</span><span class="font-bold">10%</span></div>
+                            <div class="w-full bg-gray-200 rounded-full h-4"><div class="bg-orange-500 h-4 rounded-full" style="width: 10%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>✅ Ja</span><span class="font-bold">2%</span></div>
+                            <div class="w-full bg-gray-200 rounded-full h-4"><div class="bg-green-500 h-4 rounded-full" style="width: 2%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>🤷 Weiß nicht</span><span class="font-bold">1%</span></div>
+                            <div class="w-full bg-gray-200 rounded-full h-4"><div class="bg-gray-500 h-4 rounded-full" style="width: 1%"></div></div>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-xl text-center mt-6 border-2 border-green-500">
+                        <p class="text-green-800 font-bold text-lg">🎉 87% sagen NEIN! Das Volk will keinen Krieg!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-xl">
+                <h3 class="text-2xl font-bold text-center mb-4">⚖️ Dein Recht!</h3>
+                <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500 mb-4">
+                    <p class="font-bold text-blue-900 mb-2">Artikel 4 Grundgesetz:</p>
+                    <p class="italic text-blue-800">"Niemand darf gegen sein Gewissen zum Kriegsdienst mit der Waffe gezwungen werden."</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-xl text-center">
+                    <p class="font-bold text-green-900 text-lg">💪 DU HAST DAS RECHT NEIN ZU SAGEN!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- KOSTEN -->
+        <div id="content-kosten" class="tab-content hidden">
+            <div class="bg-gradient-to-r from-red-500 to-orange-500 text-white p-8 rounded-2xl text-center mb-6 shadow-2xl">
+                <h2 class="text-4xl font-bold mb-2">💰 Der wahre Preis</h2>
+                <p class="text-xl">Was kostet DICH der Krieg?</p>
+            </div>
+
+            <div class="grid gap-4 mb-6">
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-l-4 border-red-600">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">💸</div>
+                        <h3 class="text-2xl font-bold mb-2">Pro Tag</h3>
+                        <p class="text-5xl font-bold text-red-600 mb-2">847 Mio €</p>
+                        <p class="text-gray-600">Deutschland zahlt täglich für Ukraine-Krieg</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-l-4 border-orange-500">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">👤</div>
+                        <h3 class="text-2xl font-bold mb-2">Pro Bürger/Jahr</h3>
+                        <p class="text-5xl font-bold text-orange-600 mb-2">207 €</p>
+                        <p class="text-gray-600">Das zahlst DU für diesen Krieg</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 rounded-2xl shadow-xl mb-6">
+                <h3 class="text-2xl font-bold mb-4 text-center">🤔 Was könnten wir stattdessen?</h3>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-white/10 p-4 rounded-xl text-center">
+                        <div class="text-3xl mb-2">🏥</div>
+                        <p class="font-bold">50 neue</p>
+                        <p class="text-sm">Krankenhäuser/Jahr</p>
+                    </div>
+                    <div class="bg-white/10 p-4 rounded-xl text-center">
+                        <div class="text-3xl mb-2">🏫</div>
+                        <p class="font-bold">100.000</p>
+                        <p class="text-sm">neue Lehrer</p>
+                    </div>
+                    <div class="bg-white/10 p-4 rounded-xl text-center">
+                        <div class="text-3xl mb-2">🌱</div>
+                        <p class="font-bold">Komplette</p>
+                        <p class="text-sm">Energiewende</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-red-50 p-6 rounded-2xl shadow-xl border-2 border-red-300">
+                <h3 class="text-2xl font-bold text-red-900 mb-4 text-center">⚠️ Wohin fließt das Geld?</h3>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between mb-1"><span>🔫 Waffenlieferungen</span><span class="font-bold">13.9 Mrd €</span></div>
+                        <div class="w-full bg-gray-200 rounded-full h-3"><div class="bg-red-600 h-3 rounded-full" style="width: 45%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1"><span>🎖️ Militärische Ausbildung</span><span class="font-bold">7.7 Mrd €</span></div>
+                        <div class="w-full bg-gray-200 rounded-full h-3"><div class="bg-red-500 h-3 rounded-full" style="width: 25%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1"><span>❤️ Humanitäre Hilfe</span><span class="font-bold">6.2 Mrd €</span></div>
+                        <div class="w-full bg-gray-200 rounded-full h-3"><div class="bg-green-500 h-3 rounded-full" style="width: 20%"></div></div>
+                    </div>
+                </div>
+                <p class="text-center font-bold text-red-800 mt-4">Gesamt: 30.9 Milliarden € (Stand: Jan 2026)</p>
+            </div>
+        </div>
+
+        <!-- MEDIEN -->
+        <div id="content-medien" class="tab-content hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-8 rounded-2xl text-center mb-6 shadow-2xl">
+                <h2 class="text-4xl font-bold mb-2">📰 Medien vs. Realität</h2>
+                <p class="text-xl">Timeline der Versprechen & Lügen</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-white p-4 rounded-2xl shadow-xl border-l-4 border-red-600">
+                    <p class="text-sm font-bold text-gray-500 mb-2">Feb 2022</p>
+                    <div class="bg-blue-50 p-3 rounded-xl mb-2">
+                        <p class="font-medium text-blue-900">📺 Medien: "Nur Defensiv-Waffen!"</p>
+                    </div>
+                    <div class="bg-red-50 p-3 rounded-xl">
+                        <p class="font-bold text-red-900">⚠️ Realität: Heute: Panzer, Raketen, Jets</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-xl border-l-4 border-red-600">
+                    <p class="text-sm font-bold text-gray-500 mb-2">Mrz 2022</p>
+                    <div class="bg-blue-50 p-3 rounded-xl mb-2">
+                        <p class="font-medium text-blue-900">📺 Medien: "In 3 Monaten vorbei!"</p>
+                    </div>
+                    <div class="bg-red-50 p-3 rounded-xl">
+                        <p class="font-bold text-red-900">⚠️ Realität: Jan 2026 - Kein Ende in Sicht</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl shadow-xl border-l-4 border-red-600">
+                    <p class="text-sm font-bold text-gray-500 mb-2">Sep 2023</p>
+                    <div class="bg-blue-50 p-3 rounded-xl mb-2">
+                        <p class="font-medium text-blue-900">📺 Medien: "Offensive wird erfolgreich!"</p>
+                    </div>
+                    <div class="bg-red-50 p-3 rounded-xl">
+                        <p class="font-bold text-red-900">⚠️ Realität: Front kaum verändert</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 rounded-2xl mt-6 shadow-xl">
+                <h3 class="text-2xl font-bold mb-4 text-center">💀 Die Bilanz</h3>
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div>
+                        <div class="text-3xl mb-2">☠️</div>
+                        <p class="text-2xl font-bold text-red-400">600.000+</p>
+                        <p class="text-sm text-gray-300">Tote & Verletzte</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl mb-2">🏚️</div>
+                        <p class="text-2xl font-bold text-orange-400">8 Mio+</p>
+                        <p class="text-sm text-gray-300">Flüchtlinge</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl mb-2">💰</div>
+                        <p class="text-2xl font-bold text-yellow-400">1 Bio €</p>
+                        <p class="text-sm text-gray-300">Wirtschaftsschaden</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FRIEDEN -->
+        <div id="content-frieden" class="tab-content hidden">
+            <div class="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-8 rounded-2xl text-center mb-6 shadow-2xl">
+                <h2 class="text-4xl font-bold mb-2">🕊️ Friedens-Alternativen</h2>
+                <p class="text-xl">Länder die es RICHTIG machen</p>
+            </div>
+
+            <div class="grid gap-4">
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-green-600">
+                    <div class="text-center mb-4">
+                        <span class="text-6xl">🇨🇭</span>
+                        <h3 class="text-2xl font-bold mt-2">Schweiz</h3>
+                        <p class="text-green-700 font-bold">Neutral seit 1815</p>
+                    </div>
+                    <ul class="space-y-2">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> 210 Jahre KEIN Krieg</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Höchste Lebensqualität</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Vermittler weltweit</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-green-600">
+                    <div class="text-center mb-4">
+                        <span class="text-6xl">🇨🇷</span>
+                        <h3 class="text-2xl font-bold mt-2">Costa Rica</h3>
+                        <p class="text-green-700 font-bold">Armee abgeschafft 1948</p>
+                    </div>
+                    <ul class="space-y-2">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> 77 Jahre ohne Armee</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Friedlichstes Land Lateinamerikas</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> 99% Alphabetisierung</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-green-600">
+                    <div class="text-center mb-4">
+                        <span class="text-6xl">🇦🇹</span>
+                        <h3 class="text-2xl font-bold mt-2">Österreich</h3>
+                        <p class="text-green-700 font-bold">Neutral seit 1955</p>
+                    </div>
+                    <ul class="space-y-2">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> 70 Jahre Neutralität</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> UNO-Sitz in Wien</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Fokus auf Diplomatie</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 rounded-2xl mt-6 shadow-xl text-center">
+                <h3 class="text-2xl font-bold mb-4">💡 Was wir lernen können</h3>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-white/10 p-4 rounded-xl">
+                        <div class="text-3xl mb-2">🤝</div>
+                        <p class="font-bold">Diplomatie</p>
+                    </div>
+                    <div class="bg-white/10 p-4 rounded-xl">
+                        <div class="text-3xl mb-2">📚</div>
+                        <p class="font-bold">Bildung</p>
+                    </div>
+                    <div class="bg-white/10 p-4 rounded-xl">
+                        <div class="text-3xl mb-2">🌍</div>
+                        <p class="font-bold">Neutralität</p>
+                    </div>
+                </div>
+                <p class="text-xl font-bold mt-6 text-yellow-300">Frieden ist möglich! 🕊️</p>
+            </div>
+        </div>
+
+        <!-- WELTKARTE -->
+        <div id="content-weltkarte" class="tab-content hidden">
+            <div class="bg-gradient-to-r from-red-600 to-red-800 text-white p-8 rounded-2xl text-center mb-6 shadow-2xl">
+                <h2 class="text-4xl font-bold mb-2">🌍 Kriege weltweit</h2>
+                <p class="text-xl">Stand: Januar 2026</p>
+                <p class="text-5xl font-bold mt-4 text-yellow-300">47 aktive Konflikte</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-xl mb-6">
+                <h3 class="text-2xl font-bold text-center mb-4">📍 Nach Regionen</h3>
+                <div class="space-y-4">
+                    <div class="border-l-4 border-red-600 pl-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold">🌍 Afrika</span>
+                            <span class="bg-red-600 text-white px-3 py-1 rounded-full font-bold">18</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Sudan, Somalia, DR Kongo...</p>
+                    </div>
+                    <div class="border-l-4 border-red-600 pl-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold">🌏 Asien</span>
+                            <span class="bg-red-600 text-white px-3 py-1 rounded-full font-bold">12</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Myanmar, Afghanistan, Syrien...</p>
+                    </div>
+                    <div class="border-l-4 border-red-600 pl-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold">🌐 Naher Osten</span>
+                            <span class="bg-red-600 text-white px-3 py-1 rounded-full font-bold">11</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Israel-Palästina, Irak, Jemen...</p>
+                    </div>
+                    <div class="border-l-4 border-orange-500 pl-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold">🌎 Amerika</span>
+                            <span class="bg-orange-500 text-white px-3 py-1 rounded-full font-bold">4</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Mexiko, Haiti, Kolumbien...</p>
+                    </div>
+                    <div class="border-l-4 border-orange-500 pl-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold">🇪🇺 Europa</span>
+                            <span class="bg-orange-500 text-white px-3 py-1 rounded-full font-bold">2</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Ukraine-Russland, Kosovo</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 text-white p-4 rounded-2xl text-center shadow-xl">
+                    <div class="text-3xl mb-2">💀</div>
+                    <p class="text-2xl font-bold">120.000+</p>
+                    <p class="text-xs text-gray-300">Tote in 2025</p>
+                </div>
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 text-white p-4 rounded-2xl text-center shadow-xl">
+                    <div class="text-3xl mb-2">🏚️</div>
+                    <p class="text-2xl font-bold">100 Mio+</p>
+                    <p class="text-xs text-gray-300">Auf der Flucht</p>
+                </div>
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 text-white p-4 rounded-2xl text-center shadow-xl">
+                    <div class="text-3xl mb-2">😢</div>
+                    <p class="text-2xl font-bold">2.2 Mrd</p>
+                    <p class="text-xs text-gray-300">In Konfliktgebieten</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-orange-600 to-red-600 text-white p-6 rounded-2xl shadow-xl">
+                <h3 class="text-2xl font-bold mb-4 text-center">💰 Militär-Ausgaben weltweit 2025</h3>
+                <p class="text-5xl font-bold text-center mb-4">2.4 Billionen €</p>
+                <div class="bg-white/10 p-4 rounded-xl">
+                    <p class="font-bold mb-2">💭 Stell dir vor mit 16% könnten wir:</p>
+                    <ul class="space-y-1 text-sm">
+                        <li>✓ Hunger beenden: 30 Mrd € (1.2%)</li>
+                        <li>✓ Sauberes Wasser für alle: 28 Mrd € (1.1%)</li>
+                        <li>✓ Alle Kinder zur Schule: 39 Mrd € (1.6%)</li>
+                        <li>✓ Klimawandel stoppen: 300 Mrd € (12.5%)</li>
+                    </ul>
+                </div>
+                <p class="text-center text-xl font-bold mt-4 text-yellow-300">Mit 16% könnten wir die Welt retten.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-white rounded-2xl p-8 mt-8 text-center shadow-xl">
+            <h3 class="text-2xl font-bold text-purple-600 mb-2">💜 Volkspolitik.de</h3>
+            <p class="text-gray-600 mb-2">Frieden ist möglich - wenn wir es wollen!</p>
+            <p class="text-lg font-bold">🕊️ NEIN zum Krieg! ✌️</p>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('bg-white');
+            });
+            
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            const activeTab = document.getElementById('tab-' + tabName);
+            activeTab.classList.add('tab-active');
+            activeTab.classList.remove('bg-white');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function vote(choice) {
+            document.getElementById('voteButtons').style.display = 'none';
+            document.getElementById('voteResults').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

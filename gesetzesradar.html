@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesetzesradar - Volkspolitik.de</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card { animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="p-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Back Button -->
+        <a href="index.html" class="inline-block bg-white text-purple-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg hover:shadow-xl transition-all">
+            ← Zurück zur Startseite
+        </a>
+
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-8 rounded-2xl text-center mb-8 shadow-2xl">
+            <div class="text-6xl mb-4">📜</div>
+            <h1 class="text-4xl font-bold mb-2">Gesetzesradar</h1>
+            <p class="text-xl opacity-90">Alle Gesetze verständlich erklärt</p>
+            <p class="text-sm mt-2 opacity-75">Stand: Januar 2026</p>
+        </div>
+
+        <!-- Filter -->
+        <div class="bg-white p-6 rounded-2xl mb-6 shadow-xl">
+            <h3 class="font-bold text-lg mb-4">🔍 Filter</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Status</label>
+                    <select id="statusFilter" onchange="filterGesetze()" class="w-full p-3 border-2 rounded-xl focus:border-purple-500 outline-none">
+                        <option value="alle">Alle Status</option>
+                        <option value="verabschiedet">✅ Verabschiedet</option>
+                        <option value="beratung">⚠️ In Beratung</option>
+                        <option value="abgelehnt">❌ Abgelehnt</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Thema</label>
+                    <select id="themaFilter" onchange="filterGesetze()" class="w-full p-3 border-2 rounded-xl focus:border-purple-500 outline-none">
+                        <option value="alle">Alle Themen</option>
+                        <option value="soziales">💰 Soziales</option>
+                        <option value="wohnen">🏠 Wohnen</option>
+                        <option value="gesundheit">🏥 Gesundheit</option>
+                        <option value="umwelt">🌱 Umwelt</option>
+                        <option value="wirtschaft">📊 Wirtschaft</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gesetze Liste -->
+        <div id="gesetzeListe" class="space-y-4">
+            <!-- Gesetz 1 -->
+            <div class="card bg-white rounded-2xl shadow-xl overflow-hidden gesetz-card" data-status="verabschiedet" data-thema="soziales">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">✅ Verabschiedet</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">💰 Soziales</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Kindergrundsicherung 2025</h3>
+                    <p class="text-gray-600 mb-4">Bis zu 250€/Monat pro Kind für Familien mit geringem Einkommen</p>
+                    <div class="flex gap-3 mb-4 flex-wrap">
+                        <span class="bg-blue-50 px-3 py-1 rounded-lg text-sm">👥 12 Mio Kinder betroffen</span>
+                        <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm">📝 SPD, Grüne</span>
+                    </div>
+                    <button onclick="toggleDetail('gesetz1')" class="w-full bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition-all">
+                        Details anzeigen ↓
+                    </button>
+                    <div id="gesetz1" class="hidden mt-4 pt-4 border-t-2">
+                        <div class="bg-gray-50 p-4 rounded-xl mb-4">
+                            <h4 class="font-bold mb-2">📋 Details</h4>
+                            <p class="text-gray-700">Ersetzt Kindergeld, Kinderzuschlag und Teile des Bürgergeldes. Familien mit Einkommen unter 50.000€ erhalten bis zu 250€ pro Kind.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="bg-green-50 p-4 rounded-xl border-l-4 border-green-500">
+                                <h4 class="font-bold text-green-800 mb-2">✅ Pro</h4>
+                                <ul class="text-sm text-green-700 space-y-1">
+                                    <li>• Direkte Hilfe für arme Familien</li>
+                                    <li>• Weniger Bürokratie</li>
+                                    <li>• Bekämpft Kinderarmut</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                                <h4 class="font-bold text-red-800 mb-2">❌ Contra</h4>
+                                <ul class="text-sm text-red-700 space-y-1">
+                                    <li>• Kosten: 12 Mrd €/Jahr</li>
+                                    <li>• Mittelschicht profitiert wenig</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-xl border-l-4 border-yellow-500">
+                            <p class="text-yellow-900"><strong>💡 Wer profitiert?</strong> Familien mit Einkommen unter 50.000€/Jahr</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gesetz 2 -->
+            <div class="card bg-white rounded-2xl shadow-xl overflow-hidden gesetz-card" data-status="verabschiedet" data-thema="wohnen">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">✅ Verabschiedet</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">🏠 Wohnen</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Mietpreisbremse verschärft</h3>
+                    <p class="text-gray-600 mb-4">Max 2% Mieterhöhung pro Jahr in Ballungsräumen</p>
+                    <div class="flex gap-3 mb-4 flex-wrap">
+                        <span class="bg-blue-50 px-3 py-1 rounded-lg text-sm">👥 18 Mio Mieter betroffen</span>
+                        <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm">📝 SPD, Linke</span>
+                    </div>
+                    <button onclick="toggleDetail('gesetz2')" class="w-full bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition-all">
+                        Details anzeigen ↓
+                    </button>
+                    <div id="gesetz2" class="hidden mt-4 pt-4 border-t-2">
+                        <div class="bg-gray-50 p-4 rounded-xl mb-4">
+                            <h4 class="font-bold mb-2">📋 Details</h4>
+                            <p class="text-gray-700">In Großstädten (Berlin, München, Hamburg) dürfen Vermieter Mieten nur noch max. 2% pro Jahr erhöhen.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-4 rounded-xl border-l-4 border-green-500">
+                                <h4 class="font-bold text-green-800 mb-2">✅ Pro</h4>
+                                <ul class="text-sm text-green-700 space-y-1">
+                                    <li>• Schutz vor Verdrängung</li>
+                                    <li>• Bezahlbar wohnen</li>
+                                    <li>• Planungssicherheit</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                                <h4 class="font-bold text-red-800 mb-2">❌ Contra</h4>
+                                <ul class="text-sm text-red-700 space-y-1">
+                                    <li>• Vermieter investieren weniger</li>
+                                    <li>• Neubau unattraktiv</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gesetz 3 -->
+            <div class="card bg-white rounded-2xl shadow-xl overflow-hidden gesetz-card" data-status="beratung" data-thema="gesundheit">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-bold">⚠️ In Beratung</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">🏥 Gesundheit</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Digitale Patientenakte verpflichtend</h3>
+                    <p class="text-gray-600 mb-4">Alle Bürger bekommen automatisch ePA ab 2026</p>
+                    <div class="flex gap-3 mb-4 flex-wrap">
+                        <span class="bg-blue-50 px-3 py-1 rounded-lg text-sm">👥 84 Mio Bürger</span>
+                        <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm">📝 CDU, FDP</span>
+                    </div>
+                    <button onclick="toggleDetail('gesetz3')" class="w-full bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition-all">
+                        Details anzeigen ↓
+                    </button>
+                    <div id="gesetz3" class="hidden mt-4 pt-4 border-t-2">
+                        <div class="bg-gray-50 p-4 rounded-xl mb-4">
+                            <h4 class="font-bold mb-2">📋 Details</h4>
+                            <p class="text-gray-700">Jeder bekommt automatisch elektronische Patientenakte. Ärzte können Diagnosen einsehen. Opt-Out möglich.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-4 rounded-xl border-l-4 border-green-500">
+                                <h4 class="font-bold text-green-800 mb-2">✅ Pro</h4>
+                                <ul class="text-sm text-green-700 space-y-1">
+                                    <li>• Bessere Behandlung</li>
+                                    <li>• Weniger Doppeluntersuchungen</li>
+                                    <li>• Notfall-Zugriff</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                                <h4 class="font-bold text-red-800 mb-2">❌ Contra</h4>
+                                <ul class="text-sm text-red-700 space-y-1">
+                                    <li>• Datenschutz-Bedenken</li>
+                                    <li>• Hackerangriffe möglich</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gesetz 4 -->
+            <div class="card bg-white rounded-2xl shadow-xl overflow-hidden gesetz-card" data-status="verabschiedet" data-thema="umwelt">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">✅ Verabschiedet</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">🌱 Umwelt</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Klimaschutz-Investitionspaket</h3>
+                    <p class="text-gray-600 mb-4">50 Mrd € für erneuerbare Energien bis 2027</p>
+                    <div class="flex gap-3 mb-4 flex-wrap">
+                        <span class="bg-blue-50 px-3 py-1 rounded-lg text-sm">👥 Alle Bürger</span>
+                        <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm">📝 Grüne, SPD</span>
+                    </div>
+                    <button onclick="toggleDetail('gesetz4')" class="w-full bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition-all">
+                        Details anzeigen ↓
+                    </button>
+                    <div id="gesetz4" class="hidden mt-4 pt-4 border-t-2">
+                        <div class="bg-gray-50 p-4 rounded-xl mb-4">
+                            <h4 class="font-bold mb-2">📋 Details</h4>
+                            <p class="text-gray-700">Massive Investitionen in Wind, Solar, Wärmepumpen, öffentliche Verkehrsmittel. Ziel: Klimaneutralität bis 2045.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-4 rounded-xl border-l-4 border-green-500">
+                                <h4 class="font-bold text-green-800 mb-2">✅ Pro</h4>
+                                <ul class="text-sm text-green-700 space-y-1">
+                                    <li>• Klimaziele erreichen</li>
+                                    <li>• Neue Arbeitsplätze</li>
+                                    <li>• Energieunabhängigkeit</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                                <h4 class="font-bold text-red-800 mb-2">❌ Contra</h4>
+                                <ul class="text-sm text-red-700 space-y-1">
+                                    <li>• Hohe Kosten (50 Mrd)</li>
+                                    <li>• Strompreise steigen?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gesetz 5 -->
+            <div class="card bg-white rounded-2xl shadow-xl overflow-hidden gesetz-card" data-status="abgelehnt" data-thema="wirtschaft">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-bold">❌ Abgelehnt</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">📊 Wirtschaft</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Vermögensteuer für Superreiche</h3>
+                    <p class="text-gray-600 mb-4">1% Steuer auf Vermögen über 50 Mio €</p>
+                    <div class="flex gap-3 mb-4 flex-wrap">
+                        <span class="bg-blue-50 px-3 py-1 rounded-lg text-sm">👥 ~20.000 Superreiche</span>
+                        <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm">📝 Die Linke</span>
+                    </div>
+                    <button onclick="toggleDetail('gesetz5')" class="w-full bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition-all">
+                        Details anzeigen ↓
+                    </button>
+                    <div id="gesetz5" class="hidden mt-4 pt-4 border-t-2">
+                        <div class="bg-gray-50 p-4 rounded-xl mb-4">
+                            <h4 class="font-bold mb-2">📋 Details</h4>
+                            <p class="text-gray-700">Vermögen über 50 Mio € sollten mit 1%/Jahr besteuert werden. 10-15 Mrd € Einnahmen. Von CDU/FDP abgelehnt.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-green-50 p-4 rounded-xl border-l-4 border-green-500">
+                                <h4 class="font-bold text-green-800 mb-2">✅ Pro</h4>
+                                <ul class="text-sm text-green-700 space-y-1">
+                                    <li>• Umverteilung</li>
+                                    <li>• Mehr Gerechtigkeit</li>
+                                    <li>• Geld für Soziales</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500">
+                                <h4 class="font-bold text-red-800 mb-2">❌ Contra</h4>
+                                <ul class="text-sm text-red-700 space-y-1">
+                                    <li>• Kapitalflucht</li>
+                                    <li>• Verfassungsrechtlich schwierig</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-white rounded-2xl p-8 mt-8 text-center shadow-xl">
+            <h3 class="text-2xl font-bold text-purple-600 mb-2">💜 Volkspolitik.de</h3>
+            <p class="text-gray-600">Gesetze verständlich erklärt - für alle!</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetail(id) {
+            const detail = document.getElementById(id);
+            detail.classList.toggle('hidden');
+        }
+
+        function filterGesetze() {
+            const status = document.getElementById('statusFilter').value;
+            const thema = document.getElementById('themaFilter').value;
+            const cards = document.querySelectorAll('.gesetz-card');
+
+            cards.forEach(card => {
+                const cardStatus = card.dataset.status;
+                const cardThema = card.dataset.thema;
+                
+                const statusMatch = status === 'alle' || cardStatus === status;
+                const themaMatch = thema === 'alle' || cardThema === thema;
+
+                if (statusMatch && themaMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

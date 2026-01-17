@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politiker-Profile - Volkspolitik.de</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card { animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hidden { display: none; }
+        .politiker-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="p-4">
+    <div class="max-w-6xl mx-auto">
+        <!-- Back Button -->
+        <a href="index.html" class="inline-block bg-white text-purple-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg hover:shadow-xl transition-all">
+            ← Zurück zur Startseite
+        </a>
+
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-8 rounded-2xl text-center mb-8 shadow-2xl">
+            <div class="text-6xl mb-4">👔</div>
+            <h1 class="text-4xl font-bold mb-2">Politiker-Profile</h1>
+            <p class="text-xl opacity-90">Die BIG 6 unter der Lupe</p>
+            <p class="text-sm mt-2 opacity-75">Verständlichkeit & Versprechen bewertet</p>
+        </div>
+
+        <!-- Sort Buttons -->
+        <div class="bg-white p-4 rounded-2xl mb-6 shadow-xl">
+            <h3 class="font-bold mb-3">🔍 Sortieren nach:</h3>
+            <div class="flex gap-3 flex-wrap">
+                <button onclick="sortBy('verstaendlichkeit')" id="btn-verstaendlichkeit" class="px-4 py-2 rounded-xl font-bold bg-purple-600 text-white transition-all">
+                    📊 Verständlichkeit
+                </button>
+                <button onclick="sortBy('versprechen')" id="btn-versprechen" class="px-4 py-2 rounded-xl font-bold bg-gray-100 hover:bg-gray-200 transition-all">
+                    ✅ Versprechen gehalten
+                </button>
+            </div>
+        </div>
+
+        <!-- Übersicht -->
+        <div id="overview">
+            <div id="politiker-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Alice Weidel -->
+                <div class="politiker-card card bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transition-all" onclick="showDetail('weidel')" data-verstaendlichkeit="7" data-versprechen="0">
+                    <div class="bg-blue-500 text-white p-6 text-center">
+                        <div class="text-5xl mb-3">👤</div>
+                        <h3 class="text-2xl font-bold">Alice Weidel</h3>
+                        <p class="text-lg opacity-90">AfD</p>
+                        <p class="text-sm opacity-75">Oppositionsführerin</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600">📊 Verständlichkeit</p>
+                            <p class="text-3xl font-bold">7/10 🥇</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">✅ Versprechen</p>
+                            <p class="text-sm italic text-gray-500">Opposition - nicht bewertbar</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Janine Wissler -->
+                <div class="politiker-card card bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transition-all" onclick="showDetail('wissler')" data-verstaendlichkeit="6" data-versprechen="0">
+                    <div class="bg-pink-500 text-white p-6 text-center">
+                        <div class="text-5xl mb-3">👤</div>
+                        <h3 class="text-2xl font-bold">Janine Wissler</h3>
+                        <p class="text-lg opacity-90">Die Linke</p>
+                        <p class="text-sm opacity-75">Parteivorsitzende</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600">📊 Verständlichkeit</p>
+                            <p class="text-3xl font-bold">6/10 🥈</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">✅ Versprechen</p>
+                            <p class="text-sm italic text-gray-500">Opposition - nicht bewertbar</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lars Klingbeil -->
+                <div class="politiker-card card bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transition-all" onclick="showDetail('klingbeil')" data-verstaendlichkeit="6" data-versprechen="5">
+                    <div class="bg-red-600 text-white p-6 text-center">
+                        <div class="text-5xl mb-3">👤</div>
+                        <h3 class="text-2xl font-bold">Lars Klingbeil</h3>
+                        <p class="text-lg opacity-90">SPD</p>
+                        <p class="text-sm opacity-75">Parteivorsitzender</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600">📊 Verständlichkeit</p>
+                            <p class="text-3xl font-bold">6/10 🥈</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">✅ Versprechen</p>
+                            <p class="text-3xl font-bold">5/10 🥇</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ricarda Lang -->
+                <div class="politiker-card card bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transition-all" onclick="showDetail('lang')" data-verstaendlichkeit="5" data-versprechen="4">
+                    <div class="bg-green-600 text-white p-6 text-center">
+                        <div class="text-5xl mb-3">👤</div>
+                        <h3 class="text-2xl font-bold">Ricarda Lang</h3>
+                        <p class="text-lg opacity-90">Grüne</p>
+                        <p class="text-sm opacity-75">Parteivorsitzende</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600">📊 Verständlichkeit</p>
+                            <p class="text-3xl font-bold">5/10</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">✅ Versprechen</p>
+                            <p class="text-3xl font-bold">4/10 🥈</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Christian Lindner -->
+                <div class="politiker-card card bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transition-all" onclick="showDetail('lindner')" data-verstaendlichkeit="4" data-versprechen="3">
+                    <div class="bg-yellow-400 text-gray-900 p-6 text-center">
+                        <div class="text-5xl mb-3">👤</div>
+                        <h3 class="text-2xl font-bold">Christian Lindner</h3>
+                        <p class="text-lg opacity-90">FDP</p>
+                        <p class="text-sm opacity-75">Parteivorsitzender</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600">📊 Verständlichkeit</p>
+                            <p class="text-3xl font-bold">4/10</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">✅ Versprechen</p>
+                            <p class="text-3xl font-bold">3/10 🥉</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Friedrich Merz -->
+                <div class="politiker-card card bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer transition-all" onclick="showDetail('merz')" data-verstaendlichkeit="3" data-versprechen="2">
+                    <div class="bg-gray-900 text-white p-6 text-center">
+                        <div class="text-5xl mb-3">👤</div>
+                        <h3 class="text-2xl font-bold">Friedrich Merz</h3>
+                        <p class="text-lg opacity-90">CDU</p>
+                        <p class="text-sm opacity-75">Bundeskanzler</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600">📊 Verständlichkeit</p>
+                            <p class="text-3xl font-bold text-red-600">3/10 😬</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">✅ Versprechen</p>
+                            <p class="text-3xl font-bold text-red-600">2/10 😬</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Views -->
+        <div id="detail-weidel" class="hidden">
+            <button onclick="showOverview()" class="bg-white text-purple-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg">← Zurück</button>
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-blue-500 text-white p-8 text-center">
+                    <div class="text-6xl mb-4">👤</div>
+                    <h2 class="text-4xl font-bold">Alice Weidel</h2>
+                    <p class="text-2xl">AfD</p>
+                    <p class="text-xl opacity-75">Oppositionsführerin</p>
+                </div>
+                <div class="p-8">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">📊 Verständlichkeit</h3>
+                            <p class="text-5xl font-bold">7/10</p>
+                        </div>
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">✅ Versprechen</h3>
+                            <p class="italic text-gray-600">Opposition - nicht bewertbar</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 p-4 rounded-xl"><p class="font-bold mb-2">💬 Stil:</p><p>Direkt, klare Ansagen, polarisierend</p></div>
+                        <div class="bg-green-50 p-4 rounded-xl"><p class="font-bold mb-2">✅ Verständlich:</p><p>"Die Ampel-Politik hat versagt. Punkt."</p></div>
+                        <div class="bg-red-50 p-4 rounded-xl"><p class="font-bold mb-2">❌ Unverständlich:</p><p>Selten kompliziert - meist sehr direkt</p></div>
+                        <div class="bg-gray-100 p-4 rounded-xl text-center"><p class="text-xl italic">"Wir sagen was ist."</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="detail-wissler" class="hidden">
+            <button onclick="showOverview()" class="bg-white text-purple-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg">← Zurück</button>
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-pink-500 text-white p-8 text-center">
+                    <div class="text-6xl mb-4">👤</div>
+                    <h2 class="text-4xl font-bold">Janine Wissler</h2>
+                    <p class="text-2xl">Die Linke</p>
+                    <p class="text-xl opacity-75">Parteivorsitzende</p>
+                </div>
+                <div class="p-8">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">📊 Verständlichkeit</h3>
+                            <p class="text-5xl font-bold">6/10</p>
+                        </div>
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">✅ Versprechen</h3>
+                            <p class="italic text-gray-600">Opposition - nicht bewertbar</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-pink-50 p-4 rounded-xl"><p class="font-bold mb-2">💬 Stil:</p><p>Klar, emotional, leidenschaftlich</p></div>
+                        <div class="bg-green-50 p-4 rounded-xl"><p class="font-bold mb-2">✅ Verständlich:</p><p>"Niemand sollte hungern müssen."</p></div>
+                        <div class="bg-red-50 p-4 rounded-xl"><p class="font-bold mb-2">❌ Unverständlich:</p><p>Manchmal zu ideologisch</p></div>
+                        <div class="bg-gray-100 p-4 rounded-xl text-center"><p class="text-xl italic">"Soziale Gerechtigkeit ist ein Grundrecht."</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="detail-klingbeil" class="hidden">
+            <button onclick="showOverview()" class="bg-white text-purple-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg">← Zurück</button>
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-red-600 text-white p-8 text-center">
+                    <div class="text-6xl mb-4">👤</div>
+                    <h2 class="text-4xl font-bold">Lars Klingbeil</h2>
+                    <p class="text-2xl">SPD</p>
+                    <p class="text-xl opacity-75">Parteivorsitzender</p>
+                </div>
+                <div class="p-8">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">📊 Verständlichkeit</h3>
+                            <p class="text-5xl font-bold">6/10</p>
+                        </div>
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">✅ Versprechen</h3>
+                            <p class="text-5xl font-bold">5/10</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-red-50 p-4 rounded-xl"><p class="font-bold mb-2">💬 Stil:</p><p>Bodenständig, pragmatisch</p></div>
+                        <div class="bg-green-50 p-4 rounded-xl"><p class="font-bold mb-2">✅ Verständlich:</p><p>"Kindergrundsicherung durchgesetzt."</p></div>
+                        <div class="bg-red-50 p-4 rounded-xl"><p class="font-bold mb-2">❌ Unverständlich:</p><p>"Makroökonomische Rahmenbedingungen..."</p></div>
+                        <div class="bg-yellow-50 p-4 rounded-xl"><p class="font-bold mb-2">📋 Versprechen:</p><p>Mindestlohn ✅ | Kindergrundsicherung ✅</p></div>
+                        <div class="bg-gray-100 p-4 rounded-xl text-center"><p class="text-xl italic">"Wir kämpfen für die arbeitende Mitte."</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="detail-lang" class="hidden">
+            <button onclick="showOverview()" class="bg-white text-purple-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg">← Zurück</button>
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-green-600 text-white p-8 text-center">
+                    <div class="text-6xl mb-4">👤</div>
+                    <h2 class="text-4xl font-bold">Ricarda Lang</h2>
+                    <p class="text-2xl">Grüne</p>
+                    <p class="text-xl opacity-75">Parteivorsitzende</p>
+                </div>
+                <div class="p-8">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">📊 Verständlichkeit</h3>
+                            <p class="text-5xl font-bold">5/10</p>
+                        </div>
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">✅ Versprechen</h3>
+                            <p class="text-5xl font-bold">4/10</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-green-50 p-4 rounded-xl"><p class="font-bold mb-2">💬 Stil:</p><p>Akademisch, engagiert</p></div>
+                        <div class="bg-green-50 p-4 rounded-xl"><p class="font-bold mb-2">✅ Verständlich:</p><p>"Handeln wir jetzt!"</p></div>
+                        <div class="bg-red-50 p-4 rounded-xl"><p class="font-bold mb-2">❌ Unverständlich:</p><p>"Transformation der fossil basierten Ökonomie..."</p></div>
+                        <div class="bg-yellow-50 p-4 rounded-xl"><p class="font-bold mb-2">📋 Versprechen:</p><p>Tempolimit ❌ | Klimapaket ✅</p></div>
+                        <div class="bg-gray-100 p-4 rounded-xl text-center"><p class="text-xl italic">"Klimaschutz ist Menschenschutz."</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="detail-lindner" class="hidden">
+            <button onclick="showOverview()" class="bg-white text-purple-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg">← Zurück</button>
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-yellow-400 text-gray-900 p-8 text-center">
+                    <div class="text-6xl mb-4">👤</div>
+                    <h2 class="text-4xl font-bold">Christian Lindner</h2>
+                    <p class="text-2xl">FDP</p>
+                    <p class="text-xl opacity-75">Parteivorsitzender</p>
+                </div>
+                <div class="p-8">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">📊 Verständlichkeit</h3>
+                            <p class="text-5xl font-bold">4/10</p>
+                        </div>
+                        <div class="bg-purple-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">✅ Versprechen</h3>
+                            <p class="text-5xl font-bold">3/10</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-yellow-50 p-4 rounded-xl"><p class="font-bold mb-2">💬 Stil:</p><p>Business-Sprache, selbstbewusst</p></div>
+                        <div class="bg-green-50 p-4 rounded-xl"><p class="font-bold mb-2">✅ Verständlich:</p><p>"Steuern runter"</p></div>
+                        <div class="bg-red-50 p-4 rounded-xl"><p class="font-bold mb-2">❌ Unverständlich:</p><p>"Allokationseffizienz des Marktes..."</p></div>
+                        <div class="bg-yellow-50 p-4 rounded-xl"><p class="font-bold mb-2">📋 Versprechen:</p><p>Keine Steuererhöhungen ❌</p></div>
+                        <div class="bg-gray-100 p-4 rounded-xl text-center"><p class="text-xl italic">"Wirtschaftswachstum ist beste Sozialpolitik."</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="detail-merz" class="hidden">
+            <button onclick="showOverview()" class="bg-white text-purple-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg">← Zurück</button>
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-gray-900 text-white p-8 text-center">
+                    <div class="text-6xl mb-4">👤</div>
+                    <h2 class="text-4xl font-bold">Friedrich Merz</h2>
+                    <p class="text-2xl">CDU</p>
+                    <p class="text-xl opacity-75">Bundeskanzler</p>
+                </div>
+                <div class="p-8">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-red-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">📊 Verständlichkeit</h3>
+                            <p class="text-5xl font-bold text-red-600">3/10 😬</p>
+                        </div>
+                        <div class="bg-red-50 p-6 rounded-xl">
+                            <h3 class="font-bold mb-2">✅ Versprechen</h3>
+                            <p class="text-5xl font-bold text-red-600">2/10 😬</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-gray-100 p-4 rounded-xl"><p class="font-bold mb-2">💬 Stil:</p><p>Kompliziert, juristisch, elitär</p></div>
+                        <div class="bg-green-50 p-4 rounded-xl"><p class="font-bold mb-2">✅ Verständlich:</p><p>Fast nie verständlich</p></div>
+                        <div class="bg-red-50 p-4 rounded-xl"><p class="font-bold mb-2">❌ Unverständlich:</p><p>"Implementation der legislativen Maßnahmen im Kontext der Subsidiaritätsprüfung..."</p></div>
+                        <div class="bg-yellow-50 p-4 rounded-xl"><p class="font-bold mb-2">📋 Versprechen:</p><p>Wirtschaftswende ❌ | Bürokratieabbau ❌</p></div>
+                        <div class="bg-gray-100 p-4 rounded-xl text-center"><p class="text-xl italic">"Die Komplexität erfordert differenzierte Lösungsansätze."</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-white rounded-2xl p-8 mt-8 text-center shadow-xl">
+            <h3 class="text-2xl font-bold text-purple-600 mb-2">💜 Volkspolitik.de</h3>
+            <p class="text-gray-600">Politiker verständlich bewertet!</p>
+        </div>
+    </div>
+
+    <script>
+        function showDetail(id) {
+            document.getElementById('overview').classList.add('hidden');
+            document.querySelectorAll('[id^="detail-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('detail-' + id).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showOverview() {
+            document.querySelectorAll('[id^="detail-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('overview').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function sortBy(criteria) {
+            const grid = document.getElementById('politiker-grid');
+            const cards = Array.from(grid.querySelectorAll('.politiker-card'));
+            
+            cards.sort((a, b) => {
+                const aVal = parseInt(a.dataset[criteria]) || 0;
+                const bVal = parseInt(b.dataset[criteria]) || 0;
+                return bVal - aVal;
+            });
+
+            cards.forEach(card => grid.appendChild(card));
+
+            // Update button styles
+            document.getElementById('btn-verstaendlichkeit').className = criteria === 'verstaendlichkeit' 
+                ? 'px-4 py-2 rounded-xl font-bold bg-purple-600 text-white transition-all'
+                : 'px-4 py-2 rounded-xl font-bold bg-gray-100 hover:bg-gray-200 transition-all';
+            document.getElementById('btn-versprechen').className = criteria === 'versprechen'
+                ? 'px-4 py-2 rounded-xl font-bold bg-purple-600 text-white transition-all'
+                : 'px-4 py-2 rounded-xl font-bold bg-gray-100 hover:bg-gray-200 transition-all';
+        }
+    </script>
+</body>
+</html>
