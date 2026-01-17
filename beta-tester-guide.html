@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta-Tester Guide - Volkspolitik.de</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .card-subtitle {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #9B59B6;
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title span {
+            margin-right: 10px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #9B59B6;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .feature-number {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-item:hover {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+
+        .checkbox-item.checked {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+            flex-shrink: 0;
+            accent-color: #4caf50;
+        }
+
+        .checkbox-label {
+            flex: 1;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .accordion {
+            margin-bottom: 15px;
+        }
+
+        .accordion-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            transform: scale(1.02);
+        }
+
+        .accordion-header.active {
+            border-radius: 15px 15px 0 0;
+        }
+
+        .accordion-content {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 15px 15px;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .accordion-content.active {
+            padding: 25px;
+            max-height: 2000px;
+        }
+
+        .accordion-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin: 3px;
+        }
+
+        .tag-purple { background: #9B59B6; color: white; }
+        .tag-blue { background: #3498db; color: white; }
+        .tag-green { background: #27ae60; color: white; }
+        .tag-red { background: #e74c3c; color: white; }
+        .tag-orange { background: #f39c12; color: white; }
+
+        .emoji-list {
+            list-style: none;
+        }
+
+        .emoji-list li {
+            padding: 10px 0;
+            padding-left: 35px;
+            position: relative;
+            border-bottom: 1px solid #eee;
+        }
+
+        .emoji-list li:last-child {
+            border-bottom: none;
+        }
+
+        .emoji-list li::before {
+            content: attr(data-emoji);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .confidential-banner {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .big-six-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .politician-mini {
+            text-align: center;
+            padding: 15px 10px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 20px;
+            }
+            .card-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .card-title {
+                font-size: 1.2rem;
+            }
+            .big-six-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Confidential Banner -->
+    <div class="confidential-banner">
+        🔒 VERTRAULICH - Beta-Version 1.0 - Nur für ausgewählte Tester!
+    </div>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div class="card" style="text-align: center; margin-top: 20px;">
+            <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 25px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 3rem;">
+                🔍
+            </div>
+            <h1 style="font-size: 2.5rem; font-weight: bold; color: #333; margin-bottom: 10px;">
+                VOLKSPOLITIK.DE
+            </h1>
+            <p style="font-size: 1.5rem; color: #9B59B6; font-weight: bold; margin-bottom: 20px;">
+                Beta-Tester Guide
+            </p>
+            <div class="success-box" style="text-align: left; max-width: 600px; margin: 0 auto;">
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    👋 <strong>Hey, danke dass du dabei bist!</strong><br><br>
+                    Du wurdest ausgewählt, weil du jemand bist, dem ich vertraue und der ehrliches Feedback gibt. 
+                    Diese Beta-Phase ist super wichtig für Volkspolitik - <strong>deine Meinung zählt!</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- PROGRESS TRACKER -->
+        <div class="card">
+            <div class="card-header" style="cursor: default;">
+                <div class="card-icon" style="background: linear-gradient(135deg, #4caf50, #8bc34a);">
+                    📊
+                </div>
+                <div>
+                    <div class="card-title">Dein Fortschritt</div>
+                    <div class="card-subtitle">Checklisten abgearbeitet</div>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%;">0%</div>
+            </div>
+            <p style="text-align: center; color: #666;" id="progressText">
+                0 von 28 Punkten erledigt
+            </p>
+        </div>
+
+        <!-- WAS IST VOLKSPOLITIK -->
+        <div class="card">
+            <div class="card-header" style="cursor: default;">
+                <div class="card-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    🎯
+                </div>
+                <div>
+                    <div class="card-title">Was ist Volkspolitik?</div>
+                    <div class="card-subtitle">Die Idee in 3 Sätzen</div>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    <strong>1.</strong> Deutsche Politik ist intransparent, kompliziert und bürgerfern.<br>
+                    <strong>2.</strong> Volkspolitik macht Politik verständlich, transparent und ehrlich.<br>
+                    <strong>3.</strong> Du siehst was Politiker versprechen, ob sie's halten und kannst mitbestimmen.
+                </p>
+            </div>
+
+            <div class="section-title"><span>😤</span> Das Problem</div>
+            <ul class="emoji-list">
+                <li data-emoji="📜">Gesetze? 400 Seiten Fachchinesisch - kein Mensch versteht das</li>
+                <li data-emoji="👔">Politiker? Reden in Worthülsen, niemand weiß was sie wirklich machen</li>
+                <li data-emoji="📚">Parteiprogramme? 100-200 Seiten - liest keiner</li>
+                <li data-emoji="💰">Bundeshaushalt? Wo geht unser Geld hin? Keine Ahnung!</li>
+                <li data-emoji="😔">Ergebnis: Politik fühlt sich weit weg an, Bürger fühlen sich machtlos</li>
+            </ul>
+
+            <div class="section-title"><span>💡</span> Die Lösung</div>
+            <div class="success-box">
+                <p style="font-size: 1.2rem; font-weight: bold; text-align: center;">
+                    ✨ Volkspolitik übersetzt Politik in verständliches Deutsch! ✨
+                </p>
+            </div>
+        </div>
+
+        <!-- DIE 7 FEATURES -->
+        <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2 style="font-size: 2rem; text-align: center; margin-bottom: 10px;">
+                🎮 Die 7 Haupt-Features
+            </h2>
+            <p style="text-align: center; font-size: 1.1rem; opacity: 0.9;">
+                Was du testen sollst - klicke auf jedes Feature für Details!
+            </p>
+        </div>
+
+        <!-- FEATURE 1: GESETZESRADAR -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div style="display: flex; align-items: center;">
+                    <div class="feature-number">1</div>
+                    <div>
+                        <div style="font-size: 1.3rem; font-weight: bold;">📜 Gesetzesradar</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Alle Gesetze verständlich erklärt</div>
+                    </div>
+                </div>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="section-title"><span>📋</span> Was ist das?</div>
+                <p style="margin-bottom: 20px;">
+                    Alle Gesetze, die gerade im Bundestag laufen - verständlich erklärt!
+                </p>
+
+                <div class="section-title"><span>👀</span> Was kannst du sehen?</div>
+                <ul class="emoji-list">
+                    <li data-emoji="📊">Status: In Beratung? Verabschiedet? Abgelehnt?</li>
+                    <li data-emoji="🏛️">Wer hat's beantragt? (welche Partei)</li>
+                    <li data-emoji="👥">Wen betrifft's? (Millionen Menschen? Nur wenige?)</li>
+                    <li data-emoji="💬">Verständliche Erklärung (kein Juristendeutsch!)</li>
+                    <li data-emoji="📅">Monatsbilanz: Wie viele Gesetze laufen gerade?</li>
+                </ul>
+
+                <div class="section-title"><span>✅</span> Teste bitte</div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="gesetz-1">
+                    <span class="checkbox-label">Verstehst du die Erklärungen?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="gesetz-2">
+                    <span class="checkbox-label">Sind die Filter sinnvoll?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="gesetz-3">
+                    <span class="checkbox-label">Ist das Dashboard übersichtlich?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="gesetz-4">
+                    <span class="checkbox-label">Würdest du das regelmäßig checken?</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE 2: POLITIKER-PROFILE -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div style="display: flex; align-items: center;">
+                    <div class="feature-number">2</div>
+                    <div>
+                        <div style="font-size: 1.3rem; font-weight: bold;">👤 Politiker-Profile</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Die BIG 6 ehrlich bewertet</div>
+                    </div>
+                </div>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="section-title"><span>🎭</span> Die BIG 6</div>
+                <div class="big-six-grid">
+                    <div class="politician-mini" style="background: #1a1a1a; color: white;">
+                        <div style="font-size: 1.5rem; margin-bottom: 5px;">👤</div>
+                        <strong>Friedrich Merz</strong><br>
+                        <small>CDU - Kanzler</small>
+                    </div>
+                    <div class="politician-mini" style="background: #E3000F; color: white;">
+                        <div style="font-size: 1.5rem; margin-bottom: 5px;">👤</div>
+                        <strong>Lars Klingbeil</strong><br>
+                        <small>SPD - Koalition</small>
+                    </div>
+                    <div class="politician-mini" style="background: #009EE0; color: white;">
+                        <div style="font-size: 1.5rem; margin-bottom: 5px;">👤</div>
+                        <strong>Alice Weidel</strong><br>
+                        <small>AfD - Opposition</small>
+                    </div>
+                    <div class="politician-mini" style="background: #64A12D; color: white;">
+                        <div style="font-size: 1.5rem; margin-bottom: 5px;">👤</div>
+                        <strong>Ricarda Lang</strong><br>
+                        <small>Grüne - Opposition</small>
+                    </div>
+                    <div class="politician-mini" style="background: #FFED00; color: #333;">
+                        <div style="font-size: 1.5rem; margin-bottom: 5px;">👤</div>
+                        <strong>Christian Lindner</strong><br>
+                        <small>FDP - Opposition</small>
+                    </div>
+                    <div class="politician-mini" style="background: #BE3075; color: white;">
+                        <div style="font-size: 1.5rem; margin-bottom: 5px;">👤</div>
+                        <strong>Janine Wissler</strong><br>
+                        <small>Linke - Opposition</small>
+                    </div>
+                </div>
+
+                <div class="section-title"><span>📊</span> Was wird bewertet?</div>
+                <ul class="emoji-list">
+                    <li data-emoji="💬">Verständlichkeit: Redet er/sie Deutsch oder Fachchinesisch? (1-10)</li>
+                    <li data-emoji="✅">Versprechen-Erfüllung: Hält er/sie was er/sie sagt? (1-10)</li>
+                    <li data-emoji="📝">Konkrete Beispiele: Was wurde versprochen, was wurde gehalten?</li>
+                    <li data-emoji="🎯">Kommunikationsstil: Für wen redet dieser Politiker?</li>
+                </ul>
+
+                <div class="warning-box">
+                    <p style="font-weight: bold; margin-bottom: 10px;">⚡ Krasse Erkenntnisse:</p>
+                    <ul class="emoji-list">
+                        <li data-emoji="🔵">AfD = beste Verständlichkeit (7/10), aber gefährlich!</li>
+                        <li data-emoji="⚫">CDU/FDP = schlechteste Verständlichkeit (3-4/10) - reden für Reiche</li>
+                        <li data-emoji="❌">Merz/Lindner = schlechteste Versprechen-Erfüllung (2-3/10)</li>
+                    </ul>
+                </div>
+
+                <div class="section-title"><span>✅</span> Teste bitte</div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="politiker-1">
+                    <span class="checkbox-label">Sind die Bewertungen nachvollziehbar?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="politiker-2">
+                    <span class="checkbox-label">Fehlen dir Infos?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="politiker-3">
+                    <span class="checkbox-label">Ist es fair oder zu parteiisch?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="politiker-4">
+                    <span class="checkbox-label">Willst du mehr Politiker sehen?</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE 3: ABSTIMMUNGSFUNKTION -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div style="display: flex; align-items: center;">
+                    <div class="feature-number">3</div>
+                    <div>
+                        <div style="font-size: 1.3rem; font-weight: bold;">👍👎 Abstimmungsfunktion</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Deine Stimme zählt!</div>
+                    </div>
+                </div>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="section-title"><span>🗳️</span> Wie funktioniert's?</div>
+                <ul class="emoji-list">
+                    <li data-emoji="👍">3 Optionen: Positiv / Neutral / Negativ</li>
+                    <li data-emoji="🔒">1 Stimme pro Account (Manipulation verhindert!)</li>
+                    <li data-emoji="📊">Live-Ergebnisse: Was denkt die Community?</li>
+                </ul>
+
+                <div class="section-title"><span>🏅</span> Vertrauens-Level</div>
+                <div style="display: grid; gap: 10px; margin-bottom: 20px;">
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; border-left: 4px solid #4caf50;">
+                        <strong>🟢 Basis-Bürger</strong> (E-Mail + Handy): 1 Stimme
+                    </div>
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; border-left: 4px solid #2196f3;">
+                        <strong>🔵 Verifizierter Bürger</strong> (+ Personalausweis): 3 Stimmen!
+                    </div>
+                    <div style="background: #fffde7; padding: 15px; border-radius: 10px; border-left: 4px solid #ffc107;">
+                        <strong>🟡 Premium-Bürger</strong> (später): Extra-Features
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <p><strong>Warum Verifizierung?</strong><br>
+                    Damit echte Menschen mehr Gewicht haben als Bots! Du entscheidest freiwillig ob du dich verifizierst.</p>
+                </div>
+
+                <div class="section-title"><span>✅</span> Teste bitte</div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="abstimmung-1">
+                    <span class="checkbox-label">Ist die Abstimmung intuitiv?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="abstimmung-2">
+                    <span class="checkbox-label">Verstehst du das Vertrauens-Level-System?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="abstimmung-3">
+                    <span class="checkbox-label">Würdest du dich verifizieren?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="abstimmung-4">
+                    <span class="checkbox-label">Sind die Ergebnisse klar dargestellt?</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE 4: TRANSPARENZ-INDEX -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div style="display: flex; align-items: center;">
+                    <div class="feature-number">4</div>
+                    <div>
+                        <div style="font-size: 1.3rem; font-weight: bold;">💰 Transparenz-Index</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Bundeshaushalt endlich verständlich</div>
+                    </div>
+                </div>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="section-title"><span>📊</span> Was siehst du?</div>
+                <ul class="emoji-list">
+                    <li data-emoji="💵">Einnahmen: Woher kommt das Geld? (Steuern, Abgaben)</li>
+                    <li data-emoji="💸">Ausgaben: Wofür wird's ausgegeben?</li>
+                </ul>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 20px 0;">
+                    <div class="tag tag-green">💰 Soziales</div>
+                    <div class="tag tag-red">🛡️ Verteidigung</div>
+                    <div class="tag tag-blue">🎓 Bildung</div>
+                    <div class="tag tag-orange">🚗 Infrastruktur</div>
+                    <div class="tag tag-purple">💳 Schuldendienst</div>
+                </div>
+
+                <div class="warning-box">
+                    <p style="font-weight: bold; margin-bottom: 10px;">😱 Schock-Faktor:</p>
+                    <ul class="emoji-list">
+                        <li data-emoji="⚔️">"Wir geben 2,5x mehr für Rüstung als für Bildung!"</li>
+                        <li data-emoji="💰">"Jeder Deutsche zahlt 600€/Jahr für Bundeswehr, aber nur 240€ für Schulen!"</li>
+                        <li data-emoji="📉">"40 Milliarden nur für Zinsen - Geld das einfach weg ist!"</li>
+                    </ul>
+                </div>
+
+                <div class="section-title"><span>🎛️</span> Zusatz-Features</div>
+                <ul class="emoji-list">
+                    <li data-emoji="⏱️">Live-Schuldenuhr (steigt jede Sekunde!)</li>
+                    <li data-emoji="👤">Pro-Kopf-Rechnung (was DICH das kostet)</li>
+                    <li data-emoji="📈">Zeitvergleich (wie hat sich's entwickelt?)</li>
+                    <li data-emoji="🎮">INTERAKTIV: Du planst selbst einen Haushalt!</li>
+                </ul>
+
+                <div class="section-title"><span>✅</span> Teste bitte</div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="transparenz-1">
+                    <span class="checkbox-label">Sind die Zahlen verständlich?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="transparenz-2">
+                    <span class="checkbox-label">Schockieren dich die Vergleiche?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="transparenz-3">
+                    <span class="checkbox-label">Ist die Visualisierung klar?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="transparenz-4">
+                    <span class="checkbox-label">Würdest du das mit Freunden teilen?</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE 5: PARTEIPROGRAMME -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div style="display: flex; align-items: center;">
+                    <div class="feature-number">5</div>
+                    <div>
+                        <div style="font-size: 1.3rem; font-weight: bold;">📚 Parteiprogramme</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Alle 6 Parteien verständlich</div>
+                    </div>
+                </div>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="info-box">
+                    <p>Parteiprogramme sind 100-200 Seiten Fachchinesisch - wir machen's verständlich!</p>
+                </div>
+
+                <div class="section-title"><span>📋</span> Für jede Partei zeigen wir:</div>
+                <ul class="emoji-list">
+                    <li data-emoji="💡">Kernaussage (1 Satz - worum geht's?)</li>
+                    <li data-emoji="🎯">Top 5 Themen (je 2-3 Sätze auf DEUTSCH!)</li>
+                    <li data-emoji="👥">Für wen ist die Partei? (Wer profitiert?)</li>
+                    <li data-emoji="💰">Was kostet das? (Ehrliche Rechnung!)</li>
+                </ul>
+
+                <div class="warning-box">
+                    <p style="font-weight: bold; margin-bottom: 10px;">💡 Erkenntnisse:</p>
+                    <ul class="emoji-list">
+                        <li data-emoji="🔴">SPD & Grüne sind beim Krieg umgefallen (früher Pazifisten!)</li>
+                        <li data-emoji="💗">Nur Die Linke ist pazifistisch geblieben</li>
+                        <li data-emoji="💛">FDP & CDU = Partei der Reichen</li>
+                        <li data-emoji="💚">Grüne = gut gemeint, aber weltfremd und teuer</li>
+                    </ul>
+                </div>
+
+                <div class="section-title"><span>✅</span> Teste bitte</div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="parteien-1">
+                    <span class="checkbox-label">Verstehst du jetzt die Parteien besser?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="parteien-2">
+                    <span class="checkbox-label">Sind die Erklärungen fair?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="parteien-3">
+                    <span class="checkbox-label">Fehlen wichtige Infos?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="parteien-4">
+                    <span class="checkbox-label">Würde dir das bei der Wahlentscheidung helfen?</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE 6: MISSSTANDSRADAR -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div style="display: flex; align-items: center;">
+                    <div class="feature-number">6</div>
+                    <div>
+                        <div style="font-size: 1.3rem; font-weight: bold;">🚨 Missstandsradar</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Probleme die Politik ignoriert</div>
+                    </div>
+                </div>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="section-title"><span>⚠️</span> Die 5 Missstände</div>
+                
+                <div style="background: #ffebee; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #e53935;">
+                    <strong>🏥 PFLEGE-KATASTROPHE:</strong><br>
+                    1 Pfleger für 45 Patienten nachts! Menschenunwürdig, gefährlich, krank machend.
+                </div>
+                
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #1976d2;">
+                    <strong>🏫 BILDUNGS-NOTSTAND:</strong><br>
+                    1 Lehrer für 28 Schüler. 0% Lebenspraktisches (Steuern? Verträge? Fehlanzeige!)
+                </div>
+                
+                <div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #f57c00;">
+                    <strong>💊 PHARMA-ABHÄNGIGKEIT:</strong><br>
+                    85€ Pillen vs 2€ Naturheilmittel. System hält Menschen krank!
+                </div>
+                
+                <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #43a047;">
+                    <strong>🌿 VERGESSENES WISSEN:</strong><br>
+                    90% Heilpflanzen-Wissen in 2 Generationen verloren.
+                </div>
+                
+                <div style="background: #fce4ec; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #d81b60;">
+                    <strong>🍖 LEBENSMITTEL-BETRUG:</strong><br>
+                    Separatorenfleisch als "Schinkenwurst". Billig = giftig, Gesund = unbezahlbar.
+                </div>
+
+                <div class="section-title"><span>✅</span> Teste bitte</div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="missstand-1">
+                    <span class="checkbox-label">Kennst du diese Probleme auch?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="missstand-2">
+                    <span class="checkbox-label">Sind die Beschreibungen treffend?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="missstand-3">
+                    <span class="checkbox-label">Fehlen wichtige Missstände?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="missstand-4">
+                    <span class="checkbox-label">Würdest du das viral teilen?</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE 7: KRIEGS-CHECK -->
+        <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div style="display: flex; align-items: center;">
+                    <div class="feature-number">7</div>
+                    <div>
+                        <div style="font-size: 1.3rem; font-weight: bold;">🕊️ Kriegs-Realitäts-Check</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">Was DICH der Krieg kostet</div>
+                    </div>
+                </div>
+                <span class="accordion-icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="section-title"><span>📑</span> 4 Tabs</div>
+                
+                <div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #ff9800;">
+                    <strong>💰 KOSTEN-SCHOCK:</strong><br>
+                    847 Millionen Euro PRO TAG! 207€ pro Bürger PRO JAHR<br>
+                    "Für dein Kriegs-Geld könntest du: [Rechner]"
+                </div>
+                
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #2196f3;">
+                    <strong>📰 REALITÄT VS MEDIEN:</strong><br>
+                    Timeline der Lügen. Was Politik sagt vs was wirklich passiert.<br>
+                    "Keine Waffen in Kriegsgebiete" → 100+ Panzer geliefert
+                </div>
+                
+                <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #4caf50;">
+                    <strong>🕊️ FRIEDENS-ALTERNATIVE:</strong><br>
+                    Erfolgsbeispiele (Schweiz, Costa Rica, Irland)<br>
+                    Pazifismus = keine Schwäche, sondern Stärke!
+                </div>
+                
+                <div style="background: #fce4ec; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #e91e63;">
+                    <strong>🌍 WELTKARTE:</strong><br>
+                    47 aktive Konflikte weltweit. Wo mischt Deutschland mit?
+                </div>
+
+                <div class="section-title"><span>✅</span> Teste bitte</div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="krieg-1">
+                    <span class="checkbox-label">Schockiert dich die Rechnung?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="krieg-2">
+                    <span class="checkbox-label">Ist die Friedens-Alternative überzeugend?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="krieg-3">
+                    <span class="checkbox-label">Zu radikal oder genau richtig?</span>
+                </div>
+                <div class="checkbox-item" onclick="toggleCheckbox(this)">
+                    <input type="checkbox" data-id="krieg-4">
+                    <span class="checkbox-label">Würdest du das teilen?</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEEDBACK-KATEGORIEN -->
+        <div class="card">
+            <div class="card-header" style="cursor: default;">
+                <div class="card-icon" style="background: linear-gradient(135deg, #f39c12, #e74c3c);">
+                    📝
+                </div>
+                <div>
+                    <div class="card-title">Wie gibst du Feedback?</div>
+                    <div class="card-subtitle">5 Kategorien beachten</div>
+                </div>
+            </div>
+
+            <div style="display: grid; gap: 15px;">
+                <div class="info-box">
+                    <strong>1️⃣ VERSTÄNDLICHKEIT:</strong><br>
+                    Verstehst du alles? Was ist unklar? Zu kompliziert oder zu simpel?
+                </div>
+                <div class="info-box">
+                    <strong>2️⃣ DESIGN & USABILITY:</strong><br>
+                    Findest du dich zurecht? Funktionieren die Buttons? Mobile oder Desktop?
+                </div>
+                <div class="info-box">
+                    <strong>3️⃣ BUGS & FEHLER:</strong><br>
+                    Was funktioniert nicht? Wo hakt es? Abstürze, Fehler, Probleme?
+                </div>
+                <div class="info-box">
+                    <strong>4️⃣ INHALT:</strong><br>
+                    Sind die Infos korrekt? Fehlt was Wichtiges? Zu parteiisch oder okay?
+                </div>
+                <div class="info-box">
+                    <strong>5️⃣ GENERAL VIBES:</strong><br>
+                    Würdest du's nutzen? Würdest du's empfehlen? Was ist dein Gesamt-Eindruck?
+                </div>
+            </div>
+        </div>
+
+        <!-- KRITISCHE FRAGEN -->
+        <div class="card">
+            <div class="card-header" style="cursor: default;">
+                <div class="card-icon" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                    🎯
+                </div>
+                <div>
+                    <div class="card-title">Kritische Fragen</div>
+                    <div class="card-subtitle">Das suchen wir besonders</div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>1. Würdest du es WIRKLICH nutzen?</strong><br>
+                Ehrlich! Nicht "ist ne gute Idee" - sondern "Ja, ich würd's wirklich checken!"
+            </div>
+            <div class="warning-box">
+                <strong>2. Verstehen es auch "normale" Menschen?</strong><br>
+                Würde deine Mama/Oma das verstehen?
+            </div>
+            <div class="warning-box">
+                <strong>3. Ist es zu parteiisch?</strong><br>
+                Kommt Neutralität rüber oder wirkt's einseitig?
+            </div>
+            <div class="warning-box">
+                <strong>4. Was fehlt dir?</strong><br>
+                Features, Infos, Funktionen - was würdest DU noch haben wollen?
+            </div>
+            <div class="warning-box">
+                <strong>5. Würdest du's empfehlen?</strong><br>
+                Freunde, Familie, Kollegen - wenn ja: warum? Wenn nein: was müsste besser sein?
+            </div>
+        </div>
+
+        <!-- WAS WIR BRAUCHEN -->
+        <div class="card">
+            <div class="card-header" style="cursor: default;">
+                <div class="card-icon" style="background: linear-gradient(135deg, #27ae60, #2ecc71);">
+                    🚨
+                </div>
+                <div>
+                    <div class="card-title">Konstruktive Kritik</div>
+                    <div class="card-subtitle">Was uns hilft - was nicht</div>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ WAS WIR BRAUCHEN:</strong>
+                <ul class="emoji-list">
+                    <li data-emoji="✓">Ehrliches Feedback (auch negativ!)</li>
+                    <li data-emoji="✓">Konkrete Beispiele ("Hier funktioniert X nicht")</li>
+                    <li data-emoji="✓">Verbesserungsvorschläge ("Wie wäre es wenn...")</li>
+                    <li data-emoji="✓">Deine echte Meinung</li>
+                </ul>
+            </div>
+
+            <div style="background: #ffebee; padding: 20px; border-radius: 12px; border-left: 4px solid #e53935;">
+                <strong>❌ WAS UNS NICHT HILFT:</strong>
+                <ul class="emoji-list">
+                    <li data-emoji="✗">"Ist ganz cool" (zu vague!)</li>
+                    <li data-emoji="✗">"Gefällt mir nicht" (warum nicht?)</li>
+                    <li data-emoji="✗">Nur nett sein weil Freundschaft</li>
+                    <li data-emoji="✗">Keine Details nennen</li>
+                </ul>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 15px; text-align: center; margin-top: 20px;">
+                <p style="font-size: 1.3rem; font-weight: bold;">
+                    💪 SEI BRUTAL EHRLICH - DAS HILFT AM MEISTEN! 💪
+                </p>
+            </div>
+        </div>
+
+        <!-- DANKE -->
+        <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🎁</div>
+            <h2 style="font-size: 2rem; margin-bottom: 20px;">DANKE!</h2>
+            
+            <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 15px; margin-bottom: 25px;">
+                <p style="font-size: 1.2rem; margin-bottom: 15px;">
+                    <strong>Du bist einer von ~10 Beta-Testern.</strong><br>
+                    Deine Meinung entscheidet, ob Volkspolitik bereit ist für die Öffentlichkeit!
+                </p>
+            </div>
+
+            <div style="text-align: left; margin-bottom: 25px;">
+                <p style="font-size: 1.1rem; margin-bottom: 15px;"><strong>Wenn Volkspolitik erfolgreich wird:</strong></p>
+                <ul class="emoji-list" style="color: white;">
+                    <li data-emoji="⭐">Wirst du Teil der Origin-Story sein</li>
+                    <li data-emoji="🌍">Du hast mitgeholfen, deutsche Politik transparenter zu machen</li>
+                    <li data-emoji="📜">Dein Name (wenn du willst!) in den Credits</li>
+                    <li data-emoji="💎">Lebenslang Premium-Zugang (wenn's soweit ist!)</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px;">
+                <p style="font-size: 1rem; margin-bottom: 10px;">📞 <strong>Bei Fragen:</strong> Schreib mir einfach! Jederzeit!</p>
+                <p style="font-size: 1rem; margin-bottom: 10px;">⏱️ <strong>Zeitrahmen:</strong> Nimm dir die Zeit, die du brauchst!</p>
+                <p style="font-size: 0.9rem; opacity: 0.8;">Aber je schneller, desto schneller können wir's verbessern! 😊</p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 15px;">🔥</div>
+            <h3 style="font-size: 1.8rem; color: #9B59B6; margin-bottom: 15px;">
+                LET'S BUILD SOMETHING AMAZING!
+            </h3>
+            <p style="font-size: 1.1rem; color: #666; line-height: 1.6; margin-bottom: 20px;">
+                Volkspolitik wird Geschichte schreiben - und <strong>DU</strong> bist von Anfang an dabei!<br>
+                Gemeinsam machen wir Politik transparent! 🔍💜
+            </p>
+            <p style="font-size: 1.3rem; color: #9B59B6; font-weight: bold;">
+                Danke, dass du dabei bist! ☯️✌️💝❣️
+            </p>
+            <hr style="margin: 25px 0; border: none; border-top: 2px solid #eee;">
+            <p style="color: #999; font-size: 0.9rem;">
+                Beta-Version 1.0 - Vertraulich!<br>
+                Bitte nicht öffentlich teilen - nur für ausgewählte Tester!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Accordion Toggle
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isActive = header.classList.contains('active');
+            
+            // Close all other accordions
+            document.querySelectorAll('.accordion-header').forEach(h => {
+                h.classList.remove('active');
+                h.nextElementSibling.classList.remove('active');
+            });
+            
+            // Toggle this one
+            if (!isActive) {
+                header.classList.add('active');
+                content.classList.add('active');
+            }
+        }
+
+        // Checkbox Toggle with localStorage
+        function toggleCheckbox(item) {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            item.classList.toggle('checked', checkbox.checked);
+            
+            // Save to localStorage
+            const id = checkbox.getAttribute('data-id');
+            localStorage.setItem('vp-beta-' + id, checkbox.checked);
+            
+            updateProgress();
+        }
+
+        // Update Progress Bar
+        function updateProgress() {
+            const total = document.querySelectorAll('.checkbox-item input[type="checkbox"]').length;
+            const checked = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked').length;
+            const percent = Math.round((checked / total) * 100);
+            
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressFill').textContent = percent + '%';
+            document.getElementById('progressText').textContent = checked + ' von ' + total + ' Punkten erledigt';
+        }
+
+        // Load saved checkboxes on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(checkbox => {
+                const id = checkbox.getAttribute('data-id');
+                const saved = localStorage.getItem('vp-beta-' + id);
+                if (saved === 'true') {
+                    checkbox.checked = true;
+                    checkbox.closest('.checkbox-item').classList.add('checked');
+                }
+            });
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
