@@ -1,0 +1,1247 @@
+import React, { useState } from 'react';
+import { Search, Menu, X, Scale, Users, AlertCircle, DollarSign, BookOpen, Shield, TrendingUp, ChevronRight } from 'lucide-react';
+
+const ValkspolitikApp = () => {
+  const [currentPage, setCurrentPage] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedPolitiker, setSelectedPolitiker] = useState(null);
+  const [politikerSort, setPolitikerSort] = useState('verstaendlichkeit');
+  const [activeKriegsTab, setActiveKriegsTab] = useState('macht');
+  const [userVote, setUserVote] = useState(null);
+  const [selectedGesetz, setSelectedGesetz] = useState(null);
+  const [gesetzFilter, setGesetzFilter] = useState('alle');
+  const [gesetzThema, setGesetzThema] = useState('alle');
+  const [gesetzVotes, setGesetzVotes] = useState({});
+  const [selectedPartei, setSelectedPartei] = useState(null);
+
+  const navItems = [
+    { id: 'home', label: 'Home', icon: TrendingUp },
+    { id: 'gesetze', label: 'Gesetzesradar', icon: Search },
+    { id: 'politiker', label: 'Politiker', icon: Users },
+    { id: 'transparenz', label: 'Transparenz', icon: DollarSign },
+    { id: 'parteien', label: 'Parteiprogramme', icon: BookOpen },
+    { id: 'missstaende', label: 'Missstände', icon: AlertCircle },
+    { id: 'krieg', label: 'Kriegs-Check', icon: Shield },
+  ];
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    setSelectedPartei(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handlePolitikerSelect = (id) => {
+    setSelectedPolitiker(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleKriegsTabChange = (tab) => {
+    setActiveKriegsTab(tab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleGesetzSelect = (id) => {
+    setSelectedGesetz(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleGesetzVote = (gesetzId, vote) => {
+    setGesetzVotes({ ...gesetzVotes, [gesetzId]: vote });
+  };
+
+  const handleParteiSelect = (id) => {
+    setSelectedPartei(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const voteStats = {
+    nein: userVote === 'nein' ? 88 : 87,
+    verteidigung: userVote === 'verteidigung' ? 11 : 10,
+    ja: userVote === 'ja' ? 2 : 2,
+    weissnicht: userVote === 'weissnicht' ? 2 : 1,
+  };
+  const totalVotes = 15847 + (userVote ? 1 : 0);
+
+  const politiker = [
+    {
+      id: 1, name: 'Alice Weidel', partei: 'AfD', parteiColor: 'blue', position: 'Oppositionsführerin',
+      verstaendlichkeit: 7, versprechen: null, stil: 'Direkt, klare Ansagen',
+      beispielGut: '"Die Ampel-Politik hat versagt. Punkt."', beispielSchlecht: 'Selten kompliziert',
+      versprechenText: 'Opposition - nicht bewertbar', staerken: ['Verständlich', 'Klar'], schwaechen: ['Populistisch'],
+      zitat: 'Wir sagen was ist.'
+    },
+    {
+      id: 2, name: 'Janine Wissler', partei: 'Die Linke', parteiColor: 'pink', position: 'Parteivorsitzende',
+      verstaendlichkeit: 6, versprechen: null, stil: 'Klar, emotional',
+      beispielGut: '"Niemand sollte hungern müssen."', beispielSchlecht: 'Manchmal ideologisch',
+      versprechenText: 'Opposition - nicht bewertbar', staerken: ['Authentisch'], schwaechen: ['Utopisch'],
+      zitat: 'Soziale Gerechtigkeit ist ein Grundrecht.'
+    },
+    {
+      id: 3, name: 'Lars Klingbeil', partei: 'SPD', parteiColor: 'red', position: 'Parteivorsitzender',
+      verstaendlichkeit: 6, versprechen: 5, stil: 'Bodenständig',
+      beispielGut: '"Kindergrundsicherung durchgesetzt."', beispielSchlecht: '"Makroökonomische Rahmenbedingungen..."',
+      versprechenText: 'Mindestlohn ✅, Kindergrundsicherung ✅', staerken: ['Bodenständig'], schwaechen: ['Ausgebremst'],
+      zitat: 'Wir kämpfen für die arbeitende Mitte.'
+    },
+    {
+      id: 4, name: 'Ricarda Lang', partei: 'Grüne', parteiColor: 'green', position: 'Parteivorsitzende',
+      verstaendlichkeit: 5, versprechen: 4, stil: 'Akademisch',
+      beispielGut: '"Handeln wir jetzt!"', beispielSchlecht: '"Transformation der fossil basierten Ökonomie..."',
+      versprechenText: 'Tempolimit ❌, Klimapaket ✅', staerken: ['Klimafokus'], schwaechen: ['Zu akademisch'],
+      zitat: 'Klimaschutz ist Menschenschutz.'
+    },
+    {
+      id: 5, name: 'Christian Lindner', partei: 'FDP', parteiColor: 'yellow', position: 'Parteivorsitzender',
+      verstaendlichkeit: 4, versprechen: 3, stil: 'Business-Sprache',
+      beispielGut: '"Steuern runter"', beispielSchlecht: '"Allokationseffizienz des Marktes..."',
+      versprechenText: 'Keine Steuererhöhungen ❌', staerken: ['Wirtschaft'], schwaechen: ['Abgehoben'],
+      zitat: 'Wirtschaftswachstum ist beste Sozialpolitik.'
+    },
+    {
+      id: 6, name: 'Friedrich Merz', partei: 'CDU', parteiColor: 'black', position: 'Bundeskanzler',
+      verstaendlichkeit: 3, versprechen: 2, stil: 'Kompliziert, juristisch',
+      beispielGut: 'Fast nie verständlich', beispielSchlecht: '"Implementation der legislativen Maßnahmen..."',
+      versprechenText: 'Wirtschaftswende ❌, Bürokratieabbau ❌', staerken: ['Erfahrung'], schwaechen: ['Unverständlich'],
+      zitat: 'Die Komplexität erfordert differenzierte Lösungsansätze.'
+    },
+  ];
+
+  const parteien = [
+    {
+      id: 'cdu',
+      name: 'CDU/CSU',
+      emoji: '🖤',
+      color: 'gray-900',
+      bgColor: 'bg-gray-900',
+      borderColor: 'border-gray-900',
+      lightBg: 'bg-gray-50',
+      tagline: 'Wirtschaft & Tradition',
+      kernaussage: 'Deutschland soll wirtschaftlich stark sein, christliche Werte bewahren und Leistung belohnen.',
+      themen: [
+        {
+          titel: 'Wirtschaftswachstum',
+          text: 'Unternehmen entlasten, Bürokratie abbauen. Weniger Steuern für Firmen = mehr Arbeitsplätze. "Der Markt regelt das meiste selbst."'
+        },
+        {
+          titel: 'Innere Sicherheit',
+          text: 'Mehr Polizei, härtere Strafen, strengere Grenzkontrollen. "Wer Gesetze bricht, muss konsequent bestraft werden."'
+        },
+        {
+          titel: 'Traditionelle Familie',
+          text: 'Ehe zwischen Mann und Frau fördern. Mehr Geld für Familien mit Kindern. "Familie ist die Basis unserer Gesellschaft."'
+        },
+        {
+          titel: 'Starke NATO & Bundeswehr',
+          text: '2% des BIP für Verteidigung. Deutschland als verlässlicher Partner. Aktuell: Ukraine-Unterstützung befürwortet.'
+        },
+        {
+          titel: 'Klimaschutz mit Augenmaß',
+          text: 'Ja zu Klimaschutz, aber nicht auf Kosten der Wirtschaft. Technologie statt Verbote. "Innovation statt Ideologie."'
+        }
+      ],
+      fuerWen: 'Unternehmer, Selbstständige, Konservative, Mittelschicht, ältere Wähler, ländliche Regionen',
+      fuerWenText: 'Wenn du Wert auf Stabilität, Wirtschaft und Tradition legst.',
+      kosten: 'Steuersenkungen + Mehr Militär = ca. 50 Mrd. € weniger Einnahmen/Jahr',
+      kostenWarnung: '⚠️ Woher kommt das Geld? Wahrscheinlich: Sozialkürzungen oder neue Schulden!'
+    },
+    {
+      id: 'spd',
+      name: 'SPD',
+      emoji: '🔴',
+      color: 'red-600',
+      bgColor: 'bg-red-600',
+      borderColor: 'border-red-600',
+      lightBg: 'bg-red-50',
+      tagline: 'Soziale Gerechtigkeit',
+      kernaussage: 'Arbeit muss sich lohnen, der Staat hilft den Schwachen, und niemand darf abgehängt werden.',
+      themen: [
+        {
+          titel: 'Mindestlohn erhöhen',
+          text: '12€ → 15€ pro Stunde. "Wer Vollzeit arbeitet, muss davon leben können." Betrifft 6 Millionen Menschen.'
+        },
+        {
+          titel: 'Bezahlbarer Wohnraum',
+          text: 'Mietpreisbremse verschärfen, mehr Sozialwohnungen bauen. 400.000 neue Wohnungen pro Jahr als Ziel.'
+        },
+        {
+          titel: 'Starker Sozialstaat',
+          text: 'Bürgergeld reformieren aber nicht abschaffen. Kindergrundsicherung einführen (12 Mio. Kinder profitieren).'
+        },
+        {
+          titel: 'Reiche stärker besteuern',
+          text: 'Vermögensteuer ab 1 Mio. €. Erbschaftssteuer erhöhen. "Die Starken schultern mehr."'
+        },
+        {
+          titel: 'Klimaschutz sozial',
+          text: 'Ja zu Klimaschutz, aber mit Ausgleich für Geringverdiener. Energiegeld statt höhere Heizkosten.'
+        }
+      ],
+      fuerWen: 'Arbeitnehmer, Familien, Geringverdiener, Gewerkschaftsmitglieder, Mieter',
+      fuerWenText: 'Wenn du für soziale Gerechtigkeit und starken Staat bist.',
+      kosten: 'Sozialausgaben + Wohnungsbau = ca. 60 Mrd. € mehr/Jahr',
+      kostenWarnung: '⚠️ Finanzierung: Höhere Steuern für Reiche + Vermögensteuer. Aber: Reicht das wirklich?'
+    },
+    {
+      id: 'fdp',
+      name: 'FDP',
+      emoji: '💛',
+      color: 'yellow-400',
+      bgColor: 'bg-yellow-400',
+      borderColor: 'border-yellow-400',
+      lightBg: 'bg-yellow-50',
+      tagline: 'Freiheit & Markt',
+      kernaussage: 'Der Staat soll sich raushalten, jeder ist seines Glückes Schmied, Eigenverantwortung first!',
+      themen: [
+        {
+          titel: 'Steuern runter!',
+          text: 'Einkommenssteuer senken, Spitzensteuersatz runter. "Wer mehr verdient, soll mehr behalten dürfen."'
+        },
+        {
+          titel: 'Schuldenbremse heilig',
+          text: 'Keine neuen Schulden! "Wir dürfen unsere Kinder nicht mit Schulden belasten." Strikte Haushaltsdisziplin.'
+        },
+        {
+          titel: 'Digitalisierung & Innovation',
+          text: 'Startups fördern, schnelles Internet überall. Deutschland zum Tech-Standort machen. "Wir brauchen Silicon Valley, nicht Silicon Tal."'
+        },
+        {
+          titel: 'Bürokratie abbauen',
+          text: 'Weniger Vorschriften, schnellere Genehmigungen. "Der Staat lähmt die Wirtschaft mit Überregulierung."'
+        },
+        {
+          titel: 'Klimaschutz durch Technik',
+          text: 'Keine Verbote! Wasserstoff, E-Fuels, Innovation. "Der Markt findet Lösungen, nicht der Staat."'
+        }
+      ],
+      fuerWen: 'Selbstständige, Gutverdiener, Startups, Liberale, Steuerzahler, Städter',
+      fuerWenText: 'Wenn du wenig Staat und viel Freiheit willst.',
+      kosten: 'Steuersenkungen = ca. 40 Mrd. € weniger Einnahmen/Jahr',
+      kostenWarnung: '⚠️ Problem: Weniger Geld + keine Schulden = Sozialstaat schrumpft zwangsläufig!'
+    },
+    {
+      id: 'gruene',
+      name: 'GRÜNE',
+      emoji: '💚',
+      color: 'green-600',
+      bgColor: 'bg-green-600',
+      borderColor: 'border-green-600',
+      lightBg: 'bg-green-50',
+      tagline: 'Klimaschutz First',
+      kernaussage: 'Klimaschutz ist DIE Priorität - auch wenn\'s wehtut. Die Zukunft unserer Kinder steht auf dem Spiel!',
+      themen: [
+        {
+          titel: 'Kohleausstieg beschleunigen',
+          text: 'Nicht 2038, sondern 2030! 100% erneuerbare Energien. Windkraft & Solar massiv ausbauen.'
+        },
+        {
+          titel: 'Verkehrswende radikal',
+          text: 'Tempo 130 auf Autobahnen, Verbrenner-Aus 2030. ÖPNV kostenlos oder 9€-Ticket dauerhaft. Fahrrad-Infrastruktur ausbauen.'
+        },
+        {
+          titel: 'Bio & Regional',
+          text: 'Massentierhaltung beenden, 50% Bio-Landwirtschaft bis 2030. Weniger Fleisch = besser für Klima & Tiere.'
+        },
+        {
+          titel: 'Soziale Gerechtigkeit',
+          text: 'Klimaschutz darf nicht die Armen treffen. Energiegeld für alle. Reiche zahlen mehr (CO2-Preis sozial ausgleichen).'
+        },
+        {
+          titel: 'Diversität & Offenheit',
+          text: 'Einwanderung als Chance, LGBTQ+ Rechte stärken, Gleichberechtigung konsequent. "Vielfalt ist unsere Stärke."'
+        }
+      ],
+      fuerWen: 'Klimabewusste, junge Leute, Akademiker, Städter, progressive Menschen',
+      fuerWenText: 'Wenn dir Umwelt wichtiger ist als Wirtschaftswachstum.',
+      kosten: 'Energiewende + ÖPNV + Bio-Umbau = ca. 100 Mrd. € mehr/Jahr',
+      kostenWarnung: '⚠️ Finanzierung: CO2-Steuer + höhere Steuern für Reiche. Aber: Energiepreise steigen erstmal für alle!'
+    },
+    {
+      id: 'afd',
+      name: 'AfD',
+      emoji: '🔵',
+      color: 'blue-500',
+      bgColor: 'bg-blue-500',
+      borderColor: 'border-blue-500',
+      lightBg: 'bg-blue-50',
+      tagline: 'Deutschland First',
+      kernaussage: 'Deutschland den Deutschen! Grenzen zu, raus aus der EU, zurück zur D-Mark, Schluss mit Gender & Klima-Hysterie!',
+      themen: [
+        {
+          titel: 'Grenzen dicht!',
+          text: 'Null Einwanderung aus bestimmten Ländern. Abschiebungen massiv erhöhen. "Wer unsere Werte nicht teilt, hat hier nichts zu suchen."'
+        },
+        {
+          titel: 'Raus aus der EU',
+          text: '"Dexit" wie Brexit. Deutschland soll wieder souverän sein. "Brüssel bestimmt nicht über uns!"'
+        },
+        {
+          titel: 'Klima-Panik stoppen',
+          text: 'Kein CO2-Preis, kein Verbrenner-Aus. "Klimawandel ist natürlich, nicht menschengemacht." Kohle & Atom zurück.'
+        },
+        {
+          titel: 'Traditionelle Werte',
+          text: 'Ehe = Mann + Frau. Kein Gender-Mainstreaming in Schulen. "Wir sind nicht für jedes Minderheitenproblem zuständig."'
+        },
+        {
+          titel: 'Direkte Demokratie',
+          text: 'Volksabstimmungen nach Schweizer Vorbild. "Das Volk soll entscheiden, nicht die Eliten in Berlin!"'
+        }
+      ],
+      fuerWen: 'Unzufriedene, EU-Gegner, Einwanderungskritiker, ländliche Regionen (Ost), Protestwähler',
+      fuerWenText: 'Wenn du dich von "denen da oben" nicht mehr vertreten fühlst.',
+      kosten: 'EU-Austritt = Chaos! Wirtschaft bricht ein, Milliarden an Verlusten',
+      kostenWarnung: '⚠️ Problem: Keine seriösen Berechnungen vorhanden. Brexit-Vorbild zeigt: Wirtschaftliche Katastrophe!'
+    },
+    {
+      id: 'linke',
+      name: 'DIE LINKE',
+      emoji: '💗',
+      color: 'pink-500',
+      bgColor: 'bg-pink-500',
+      borderColor: 'border-pink-500',
+      lightBg: 'bg-pink-50',
+      tagline: 'Radikale Gerechtigkeit',
+      kernaussage: 'Die Reichen zur Kasse! Niemand darf arm sein, Frieden statt NATO, und der Kapitalismus ist das Problem!',
+      themen: [
+        {
+          titel: 'Reiche radikal besteuern',
+          text: 'Vermögensteuer ab 500k €. Millionärssteuer 75%. Konzerne verstaatlichen (Energie, Wohnen). "Die oberen 1% haben genug!"'
+        },
+        {
+          titel: 'Mieten deckeln & enteignen',
+          text: 'Bundesweiter Mietendeckel. Deutsche Wohnen & Co. enteignen. "Wohnen ist Menschenrecht, keine Ware!"'
+        },
+        {
+          titel: 'Mindestlohn 15€ sofort',
+          text: 'Plus: 1.200€ Mindestrente. Hartz IV weg, bedingungsloses Grundeinkommen (1.200€/Monat für alle).'
+        },
+        {
+          titel: 'Raus aus der NATO',
+          text: 'Bundeswehr abschaffen, keine Waffenexporte, keine Auslandseinsätze. "Frieden schaffen ohne Waffen!" 🕊️'
+        },
+        {
+          titel: 'Klimaschutz sozial',
+          text: 'Energiekonzerne verstaatlichen. Kostenloser ÖPNV für alle. Reiche zahlen, nicht die Armen. "Klimakrise = Kapitalismuskrise!"'
+        }
+      ],
+      fuerWen: 'Geringverdiener, Arbeitslose, Mieter, Pazifisten, Systemkritiker, junge Idealisten',
+      fuerWenText: 'Wenn du glaubst, dass der Kapitalismus das Grundproblem ist.',
+      kosten: 'Grundeinkommen + Mindestrente + ÖPNV = ca. 500 Mrd. € mehr/Jahr (!!)',
+      kostenWarnung: '⚠️ Finanzierung: Selbst mit Superreichen-Steuer unrealistisch! Wirtschaft würde kollabieren.'
+    }
+  ];
+
+  const sortedPolitiker = [...politiker].sort((a, b) => {
+    if (politikerSort === 'verstaendlichkeit') return b.verstaendlichkeit - a.verstaendlichkeit;
+    const aScore = a.versprechen || 0;
+    const bScore = b.versprechen || 0;
+    return bScore - aScore;
+  });
+
+  const gesetze = [
+    {
+      id: 1, titel: 'Kindergrundsicherung 2025', status: 'verabschiedet', thema: 'soziales',
+      kurz: 'Bis zu 250€/Monat pro Kind für Familien mit geringem Einkommen',
+      betroffen: '12 Mio Kinder', antrag: 'SPD, Grüne',
+      details: 'Ersetzt Kindergeld, Kinderzuschlag und Teile des Bürgergeldes. Familien mit Einkommen unter 50.000€ erhalten bis zu 250€ pro Kind.',
+      pro: ['Direkte Hilfe für arme Familien', 'Weniger Bürokratie', 'Bekämpft Kinderarmut'],
+      contra: ['Kosten: 12 Mrd €/Jahr', 'Mittelschicht profitiert wenig'],
+      profitiert: 'Familien mit Einkommen unter 50.000€/Jahr'
+    },
+    {
+      id: 2, titel: 'Cannabis-Legalisierung Update', status: 'beratung', thema: 'gesellschaft',
+      kurz: 'Kommerzielle Abgabe in lizenzierten Shops ab 2026',
+      betroffen: '4+ Mio Konsumenten', antrag: 'FDP, Grüne',
+      details: 'Nach Teil-Legalisierung 2024 soll nun kommerzieller Verkauf erlaubt werden. Nur an Erwachsene, mit Qualitätskontrolle.',
+      pro: ['Schwarzmarkt bekämpfen', 'Qualitätskontrolle', 'Steuereinnahmen ~500 Mio €'],
+      contra: ['Gesundheitsrisiken', 'CDU/CSU dagegen', 'Jugendschutz-Bedenken'],
+      profitiert: 'Konsumenten, Händler, Staatskasse'
+    },
+    {
+      id: 3, titel: 'Mietpreisbremse verschärft', status: 'verabschiedet', thema: 'wohnen',
+      kurz: 'Max 2% Mieterhöhung pro Jahr in Ballungsräumen',
+      betroffen: '18 Mio Mieter', antrag: 'SPD, Linke',
+      details: 'In Großstädten (Berlin, München, Hamburg) dürfen Vermieter Mieten nur noch max. 2% pro Jahr erhöhen.',
+      pro: ['Schutz vor Verdrängung', 'Bezahlbar wohnen', 'Planungssicherheit'],
+      contra: ['Vermieter investieren weniger', 'Neubau unattraktiv', 'Wohnungsmangel?'],
+      profitiert: 'Bestandsmieter in Großstädten'
+    },
+    {
+      id: 4, titel: 'Klimaschutz-Investitionspaket', status: 'verabschiedet', thema: 'umwelt',
+      kurz: '50 Mrd € für erneuerbare Energien bis 2027',
+      betroffen: 'Alle Bürger', antrag: 'Grüne, SPD',
+      details: 'Massive Investitionen in Wind, Solar, Wärmepumpen, öffentliche Verkehrsmittel. Ziel: Klimaneutralität bis 2045.',
+      pro: ['Klimaziele erreichen', 'Arbeitsplätze', 'Energieunabhängigkeit'],
+      contra: ['Hohe Kosten (50 Mrd)', 'Strompreise steigen?', 'Zeitdruck'],
+      profitiert: 'Klima, Zukunft, Energiebranche'
+    },
+    {
+      id: 5, titel: 'Digitale Patientenakte verpflichtend', status: 'beratung', thema: 'gesundheit',
+      kurz: 'Alle Bürger bekommen automatisch ePA ab 2026',
+      betroffen: '84 Mio Bürger', antrag: 'CDU, FDP',
+      details: 'Jeder bekommt automatisch elektronische Patientenakte. Ärzte können Diagnosen einsehen. Opt-Out möglich.',
+      pro: ['Bessere Behandlung', 'Weniger Doppeluntersuchungen', 'Notfall-Zugriff'],
+      contra: ['Datenschutz-Bedenken', 'Hackerangriffe möglich', 'Zwang zur Teilnahme?'],
+      profitiert: 'Ärzte, Patienten bei Notfällen'
+    },
+    {
+      id: 6, titel: 'Vermögensteuer für Superreiche', status: 'abgelehnt', thema: 'wirtschaft',
+      kurz: '1% Steuer auf Vermögen über 50 Mio €',
+      betroffen: '~20.000 Superreiche', antrag: 'Die Linke',
+      details: 'Vermögen über 50 Mio € sollten mit 1%/Jahr besteuert werden. 10-15 Mrd € Einnahmen. Von CDU/FDP abgelehnt.',
+      pro: ['Umverteilung', 'Mehr Gerechtigkeit', 'Geld für Soziales'],
+      contra: ['Kapitalflucht', 'Verfassungsrechtlich schwierig', 'Belastet Wirtschaft'],
+      profitiert: 'Staatskasse, Sozialleistungen'
+    },
+  ];
+
+  const getGesetzVoteStats = (gesetzId) => {
+    const base = {
+      1: { positiv: 67, neutral: 18, negativ: 15 },
+      2: { positiv: 72, neutral: 15, negativ: 13 },
+      3: { positiv: 58, neutral: 22, negativ: 20 },
+      4: { positiv: 64, neutral: 19, negativ: 17 },
+      5: { positiv: 45, neutral: 28, negativ: 27 },
+      6: { positiv: 61, neutral: 14, negativ: 25 },
+    };
+    const stats = base[gesetzId] || { positiv: 50, neutral: 25, negativ: 25 };
+    const vote = gesetzVotes[gesetzId];
+    if (vote === 'positiv') stats.positiv += 1;
+    if (vote === 'neutral') stats.neutral += 1;
+    if (vote === 'negativ') stats.negativ += 1;
+    return stats;
+  };
+
+  const filteredGesetze = gesetze.filter(g => {
+    if (gesetzFilter !== 'alle' && g.status !== gesetzFilter) return false;
+    if (gesetzThema !== 'alle' && g.thema !== gesetzThema) return false;
+    return true;
+  });
+
+  const PartyColorsIcon = () => (
+    <div className="w-12 h-12 rounded-lg overflow-hidden grid grid-cols-3 gap-0.5 p-0.5 bg-gray-200">
+      <div className="bg-black rounded-sm"></div>
+      <div className="bg-red-600 rounded-sm"></div>
+      <div className="bg-yellow-400 rounded-sm"></div>
+      <div className="bg-green-600 rounded-sm"></div>
+      <div className="bg-blue-500 rounded-sm"></div>
+      <div className="bg-pink-500 rounded-sm"></div>
+    </div>
+  );
+
+  const GesetzesradarPage = () => {
+    const statusColors = { verabschiedet: 'green', beratung: 'orange', abgelehnt: 'red' };
+    const statusLabels = { verabschiedet: '✅ Verabschiedet', beratung: '⚠️ In Beratung', abgelehnt: '❌ Abgelehnt' };
+
+    if (selectedGesetz) {
+      const g = gesetze.find(x => x.id === selectedGesetz);
+      const stats = getGesetzVoteStats(g.id);
+      const voted = gesetzVotes[g.id];
+      const total = stats.positiv + stats.neutral + stats.negativ;
+
+      return (
+        <div className="space-y-8">
+          <button onClick={() => { setSelectedGesetz(null); window.scrollTo(0,0); }}
+            className="text-purple-600 font-medium">← Zurück zur Übersicht</button>
+
+          <div className="bg-white p-8 rounded-xl shadow-xl border-t-4 border-purple-600">
+            <div className="flex justify-between items-center mb-6">
+              <span className={`px-4 py-2 rounded-full font-bold bg-${statusColors[g.status]}-100 text-${statusColors[g.status]}-800`}>
+                {statusLabels[g.status]}
+              </span>
+            </div>
+
+            <h2 className="text-4xl font-bold mb-4">{g.titel}</h2>
+            <p className="text-xl text-gray-700 mb-6">{g.kurz}</p>
+
+            <div className="grid md:grid-cols-2 gap-4 mb-6">
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <p className="font-bold text-purple-900 mb-1">👥 Wer betroffen?</p>
+                <p>{g.betroffen}</p>
+              </div>
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <p className="font-bold text-blue-900 mb-1">📝 Wer beantragt?</p>
+                <p>{g.antrag}</p>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 p-6 rounded-lg mb-6">
+              <h3 className="text-xl font-bold mb-3">📋 Details</h3>
+              <p className="text-gray-700">{g.details}</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-lg">
+                <h3 className="font-bold text-green-900 mb-3">✅ Pro</h3>
+                <ul className="space-y-2">
+                  {g.pro.map((item, i) => <li key={i} className="text-green-800">• {item}</li>)}
+                </ul>
+              </div>
+              <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-lg">
+                <h3 className="font-bold text-red-900 mb-3">❌ Contra</h3>
+                <ul className="space-y-2">
+                  {g.contra.map((item, i) => <li key={i} className="text-red-800">• {item}</li>)}
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 border border-yellow-300 p-4 rounded-lg mb-8">
+              <p className="text-yellow-900"><span className="font-bold">💡 Wer profitiert?</span> {g.profitiert}</p>
+            </div>
+
+            <div className="border-t-2 pt-8">
+              <h3 className="text-2xl font-bold text-center mb-6">🗳️ Wie findest du dieses Gesetz?</h3>
+              {!voted ? (
+                <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
+                  {[
+                    { id: 'positiv', label: '👍 Gut' },
+                    { id: 'neutral', label: '😐 Neutral' },
+                    { id: 'negativ', label: '👎 Schlecht' },
+                  ].map((opt) => (
+                    <button key={opt.id} onClick={() => handleGesetzVote(g.id, opt.id)}
+                      className="p-4 rounded-lg border-2 border-gray-300 hover:border-purple-500 hover:bg-purple-50 font-bold">
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-4 max-w-3xl mx-auto">
+                  <p className="text-center text-gray-600 mb-4">📊 Ergebnisse ({total.toLocaleString()} Stimmen)</p>
+                  {[
+                    { id: 'positiv', label: '👍 Gut', percent: Math.round((stats.positiv / total) * 100) },
+                    { id: 'neutral', label: '😐 Neutral', percent: Math.round((stats.neutral / total) * 100) },
+                    { id: 'negativ', label: '👎 Schlecht', percent: Math.round((stats.negativ / total) * 100) },
+                  ].map((r) => (
+                    <div key={r.id}>
+                      <div className="flex justify-between mb-1">
+                        <span className="font-medium">{r.label}</span>
+                        <span className="font-bold">{r.percent}%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-4">
+                        <div className="bg-purple-600 h-4 rounded-full transition-all duration-1000"
+                          style={{ width: `${r.percent}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mt-4">
+                    <p className="text-purple-900 font-bold text-center">✅ Deine Stimme wurde gezählt!</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-8">
+        <div className="bg-gradient-to-br from-purple-600 to-purple-800 text-white p-12 rounded-2xl text-center">
+          <h2 className="text-5xl font-bold mb-4">📜 Gesetzesradar</h2>
+          <p className="text-2xl">Alle Gesetze verständlich erklärt. Mit deiner Stimme.</p>
+          <p className="text-lg mt-2 text-purple-200">Stand: 17. Oktober 2025</p>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-md">
+          <h3 className="text-xl font-bold mb-4">🔍 Filter</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Status</label>
+              <select value={gesetzFilter} onChange={(e) => setGesetzFilter(e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg">
+                <option value="alle">Alle Status</option>
+                <option value="verabschiedet">✅ Verabschiedet</option>
+                <option value="beratung">⚠️ In Beratung</option>
+                <option value="abgelehnt">❌ Abgelehnt</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Thema</label>
+              <select value={gesetzThema} onChange={(e) => setGesetzThema(e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg">
+                <option value="alle">Alle Themen</option>
+                <option value="soziales">💰 Soziales</option>
+                <option value="gesellschaft">👥 Gesellschaft</option>
+                <option value="wohnen">🏠 Wohnen</option>
+                <option value="umwelt">🌱 Umwelt</option>
+                <option value="gesundheit">🏥 Gesundheit</option>
+                <option value="wirtschaft">📊 Wirtschaft</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-6">
+          {filteredGesetze.map((g) => {
+            const stats = getGesetzVoteStats(g.id);
+            const total = stats.positiv + stats.neutral + stats.negativ;
+            const posPercent = Math.round((stats.positiv / total) * 100);
+
+            return (
+              <div key={g.id} onClick={() => handleGesetzSelect(g.id)}
+                className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer border border-gray-200">
+                <div className="flex justify-between items-center mb-4">
+                  <span className={`px-3 py-1 rounded-full text-xs font-bold bg-${statusColors[g.status]}-100 text-${statusColors[g.status]}-800`}>
+                    {statusLabels[g.status]}
+                  </span>
+                </div>
+                <h3 className="text-2xl font-bold mb-3">{g.titel}</h3>
+                <p className="text-gray-700 mb-4">{g.kurz}</p>
+                <div className="flex gap-3 mb-4">
+                  <div className="bg-purple-50 px-3 py-1 rounded-lg text-sm">
+                    <span className="font-medium">👥 {g.betroffen}</span>
+                  </div>
+                  <div className="bg-blue-50 px-3 py-1 rounded-lg text-sm">
+                    <span className="font-medium">📝 {g.antrag}</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between pt-4 border-t">
+                  <div className="flex items-center space-x-2">
+                    <div className="text-2xl">{posPercent >= 60 ? '👍' : posPercent >= 40 ? '😐' : '👎'}</div>
+                    <span className="text-sm text-gray-600">{posPercent}% positiv ({total.toLocaleString()} Stimmen)</span>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {filteredGesetze.length === 0 && (
+          <div className="bg-white p-12 rounded-xl text-center">
+            <p className="text-xl text-gray-600">Keine Gesetze mit diesen Filtern gefunden.</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const Header = () => (
+    <header className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handlePageChange('home')}>
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-400 rounded-lg flex items-center justify-center">
+              <Scale className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold">Volkspolitik</h1>
+              <p className="text-xs text-purple-600">Das Volk prüft die Politik</p>
+            </div>
+          </div>
+          <nav className="hidden md:flex space-x-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button key={item.id} onClick={() => handlePageChange(item.id)}
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all ${
+                    currentPage === item.id ? 'bg-purple-600 text-white' : 'text-gray-600 hover:bg-purple-50'
+                  }`}>
+                  <Icon className="w-4 h-4" />
+                  <span className="text-sm font-medium">{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+          <button className="md:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+        {mobileMenuOpen && (
+          <nav className="md:hidden py-4 border-t mt-4">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button key={item.id} onClick={() => { handlePageChange(item.id); setMobileMenuOpen(false); }}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg ${
+                    currentPage === item.id ? 'bg-purple-600 text-white' : 'text-gray-600'
+                  }`}>
+                  <Icon className="w-5 h-5" />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+        )}
+      </div>
+    </header>
+  );
+
+  const HomePage = () => (
+    <div className="space-y-12">
+      <section className="bg-gradient-to-br from-purple-600 to-purple-800 text-white py-16 px-4 rounded-2xl">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Transparenz in der Politik. Endlich verständlich.</h2>
+          <p className="text-xl mb-8">Wir durchleuchten Gesetze, Politiker und Parteiprogramme.</p>
+          <button className="bg-white text-purple-600 px-8 py-4 rounded-lg font-bold">Jetzt mitmachen!</button>
+        </div>
+      </section>
+      <section className="grid md:grid-cols-2 gap-6">
+        {navItems.slice(1).map((item) => {
+          const Icon = item.icon;
+          const isParty = item.id === 'politiker' || item.id === 'parteien';
+          return (
+            <button key={item.id} onClick={() => handlePageChange(item.id)}
+              className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all text-left group">
+              <div className="flex items-center space-x-3 mb-3">
+                {isParty ? <PartyColorsIcon /> : (
+                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <Icon className="w-6 h-6 text-purple-600" />
+                  </div>
+                )}
+                <h4 className="text-xl font-bold">{item.label}</h4>
+              </div>
+              <p className="text-gray-600">Feature kommt!</p>
+            </button>
+          );
+        })}
+      </section>
+    </div>
+  );
+
+  const PolitikerPage = () => {
+    const colors = {
+      black: { bg: 'bg-gray-900', border: 'border-gray-900' },
+      red: { bg: 'bg-red-600', border: 'border-red-600' },
+      yellow: { bg: 'bg-yellow-400', border: 'border-yellow-400' },
+      green: { bg: 'bg-green-600', border: 'border-green-600' },
+      blue: { bg: 'bg-blue-500', border: 'border-blue-500' },
+      pink: { bg: 'bg-pink-500', border: 'border-pink-500' },
+    };
+
+    if (selectedPolitiker) {
+      const pol = politiker.find(p => p.id === selectedPolitiker);
+      const c = colors[pol.parteiColor];
+      return (
+        <div className="space-y-8">
+          <button onClick={() => { setSelectedPolitiker(null); window.scrollTo(0,0); }}
+            className="text-purple-600 font-medium">← Zurück</button>
+          <div className="bg-white rounded-xl shadow-xl p-8">
+            <div className={`${c.bg} text-white p-8 rounded-xl mb-6 text-center`}>
+              <div className="text-6xl mb-4">👤</div>
+              <h2 className="text-4xl font-bold">{pol.name}</h2>
+              <p className="text-2xl">{pol.partei}</p>
+              <p className="text-xl opacity-75">{pol.position}</p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="bg-purple-50 p-6 rounded-lg">
+                <h3 className="font-bold mb-2">📊 Verständlichkeit</h3>
+                <p className="text-5xl font-bold">{pol.verstaendlichkeit}/10</p>
+              </div>
+              <div className="bg-purple-50 p-6 rounded-lg">
+                <h3 className="font-bold mb-2">✅ Versprechen</h3>
+                {pol.versprechen ? <p className="text-5xl font-bold">{pol.versprechen}/10</p> : 
+                  <p className="italic text-gray-600">Nicht bewertbar</p>}
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <p className="font-bold mb-2">💬 Stil:</p>
+                <p>{pol.stil}</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <p className="font-bold mb-2">✅ Verständlich:</p>
+                <p>{pol.beispielGut}</p>
+              </div>
+              <div className="bg-red-50 p-4 rounded-lg">
+                <p className="font-bold mb-2">❌ Unverständlich:</p>
+                <p>{pol.beispielSchlecht}</p>
+              </div>
+              <div className="bg-gray-100 p-4 rounded-lg text-center">
+                <p className="text-xl italic">"{pol.zitat}"</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-8">
+        <div className="bg-gradient-to-br from-purple-600 to-purple-800 text-white p-12 rounded-2xl text-center">
+          <h2 className="text-5xl font-bold mb-4">👔 Politiker-Profile</h2>
+          <p className="text-2xl">Die BIG 6 unter der Lupe</p>
+        </div>
+        <div className="bg-white p-6 rounded-xl">
+          <h3 className="font-bold mb-4">🔍 Sortieren</h3>
+          <div className="flex gap-3">
+            <button onClick={() => setPolitikerSort('verstaendlichkeit')}
+              className={`px-4 py-2 rounded-lg ${politikerSort === 'verstaendlichkeit' ? 'bg-purple-600 text-white' : 'bg-gray-100'}`}>
+              📊 Verständlichkeit
+            </button>
+            <button onClick={() => setPolitikerSort('versprechen')}
+              className={`px-4 py-2 rounded-lg ${politikerSort === 'versprechen' ? 'bg-purple-600 text-white' : 'bg-gray-100'}`}>
+              ✅ Versprechen
+            </button>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {sortedPolitiker.map((pol, idx) => {
+            const c = colors[pol.parteiColor];
+            return (
+              <div key={pol.id} onClick={() => handlePolitikerSelect(pol.id)}
+                className={`bg-white rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer border-2 ${c.border}`}>
+                <div className={`${c.bg} text-white p-6 text-center`}>
+                  <div className="text-5xl mb-3">👤</div>
+                  <h3 className="text-2xl font-bold">{pol.name}</h3>
+                  <p>{pol.partei}</p>
+                </div>
+                <div className="p-6">
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-600">📊 Verständlichkeit</p>
+                    <p className="text-3xl font-bold">{pol.verstaendlichkeit}/10</p>
+                    {idx === 0 && politikerSort === 'verstaendlichkeit' && <span className="text-2xl">🥇</span>}
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">✅ Versprechen</p>
+                    {pol.versprechen ? (
+                      <>
+                        <p className="text-3xl font-bold">{pol.versprechen}/10</p>
+                        {idx === 0 && politikerSort === 'versprechen' && <span className="text-2xl">🥇</span>}
+                      </>
+                    ) : <p className="text-sm italic">N/A</p>}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const ParteienPage = () => {
+    if (selectedPartei) {
+      const p = parteien.find(x => x.id === selectedPartei);
+      
+      return (
+        <div className="space-y-8">
+          <button onClick={() => { setSelectedPartei(null); window.scrollTo(0,0); }}
+            className="text-purple-600 font-medium">← Zurück zur Übersicht</button>
+
+          <div className={`bg-white rounded-xl shadow-xl overflow-hidden border-t-4 ${p.borderColor}`}>
+            {/* Header */}
+            <div className={`${p.bgColor} text-white p-8 text-center`}>
+              <div className="text-6xl mb-4">{p.emoji}</div>
+              <h2 className="text-4xl font-bold mb-2">{p.name}</h2>
+              <p className="text-2xl opacity-90">{p.tagline}</p>
+            </div>
+
+            <div className="p-8 space-y-8">
+              {/* Kernaussage */}
+              <div className={`${p.lightBg} p-6 rounded-xl border-l-4 ${p.borderColor}`}>
+                <h3 className="text-xl font-bold mb-3 flex items-center">
+                  <span className="mr-2">💡</span> Kernaussage
+                </h3>
+                <p className="text-lg leading-relaxed">{p.kernaussage}</p>
+              </div>
+
+              {/* Top 5 Themen */}
+              <div>
+                <h3 className="text-2xl font-bold mb-4 flex items-center">
+                  <span className="mr-2">🎯</span> Top 5 Themen
+                </h3>
+                <div className="space-y-4">
+                  {p.themen.map((thema, idx) => (
+                    <div key={idx} className={`${p.lightBg} p-5 rounded-xl border-l-4 ${p.borderColor}`}>
+                      <h4 className="font-bold text-lg mb-2">{idx + 1}. {thema.titel}</h4>
+                      <p className="text-gray-700 leading-relaxed">{thema.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Für wen? */}
+              <div className="bg-green-50 border-l-4 border-green-600 p-6 rounded-xl">
+                <h3 className="text-xl font-bold mb-3 flex items-center">
+                  <span className="mr-2">👥</span> Für wen ist die {p.name}?
+                </h3>
+                <p className="font-medium text-gray-800 mb-2">{p.fuerWen}</p>
+                <p className="text-gray-700">→ {p.fuerWenText}</p>
+              </div>
+
+              {/* Kosten */}
+              <div className="bg-orange-50 border-l-4 border-orange-600 p-6 rounded-xl">
+                <h3 className="text-xl font-bold mb-3 flex items-center">
+                  <span className="mr-2">💰</span> Was kostet das?
+                </h3>
+                <p className="font-bold text-lg text-orange-900 mb-2">{p.kosten}</p>
+                <p className="text-orange-800 font-medium">{p.kostenWarnung}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-8">
+        <div className="bg-gradient-to-br from-purple-600 to-purple-800 text-white p-12 rounded-2xl text-center">
+          <h2 className="text-5xl font-bold mb-4">📋 Parteiprogramme Verständlich</h2>
+          <p className="text-2xl">Alle 6 Bundestagsparteien - ohne Politikersprache!</p>
+          <p className="text-lg mt-2 text-purple-200">Stand: 17. Oktober 2025</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {parteien.map((p) => (
+            <div key={p.id} onClick={() => handleParteiSelect(p.id)}
+              className={`bg-white rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer border-2 ${p.borderColor}`}>
+              <div className={`${p.bgColor} text-white p-6 text-center rounded-t-xl`}>
+                <div className="text-6xl mb-3">{p.emoji}</div>
+                <h3 className="text-2xl font-bold mb-1">{p.name}</h3>
+                <p className="text-lg opacity-90">{p.tagline}</p>
+              </div>
+              <div className="p-6">
+                <p className="text-gray-700 mb-4 line-clamp-3">{p.kernaussage}</p>
+                <div className="flex items-center justify-between pt-4 border-t">
+                  <span className="text-sm font-medium text-gray-600">Mehr erfahren</span>
+                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="bg-white p-8 rounded-xl shadow-md text-center">
+          <h3 className="text-2xl font-bold mb-3 text-purple-600">💜 Volkspolitik.de</h3>
+          <p className="text-gray-700 text-lg mb-2">Politik verständlich gemacht!</p>
+          <p className="text-gray-600">Alle Infos ehrlich, verständlich und ohne Bullshit.</p>
+          <p className="text-sm text-gray-500 mt-4">Du entscheidest - aber jetzt mit echten Fakten!</p>
+        </div>
+      </div>
+    );
+  };
+
+  const KriegsCheckPage = () => (
+    <div className="space-y-8">
+      <div className="bg-gradient-to-br from-red-600 to-red-800 text-white p-12 rounded-2xl text-center">
+        <h2 className="text-5xl font-bold mb-4">☮️ Kriegs-Realitäts-Check</h2>
+        <p className="text-2xl">Was uns Krieg kostet. Und deine Macht.</p>
+      </div>
+      <div className="flex flex-wrap gap-2 justify-center">
+        {['macht', 'kosten', 'medien', 'frieden', 'weltkarte'].map((tab) => (
+          <button key={tab} onClick={() => handleKriegsTabChange(tab)}
+            className={`px-6 py-3 rounded-lg font-bold ${
+              activeKriegsTab === tab ? 'bg-purple-600 text-white' : 'bg-gray-100'
+            }`}>
+            {tab === 'macht' && '✊ Deine Macht'}
+            {tab === 'kosten' && '💰 Kosten'}
+            {tab === 'medien' && '📰 Medien'}
+            {tab === 'frieden' && '🕊️ Frieden'}
+            {tab === 'weltkarte' && '🌍 Weltkarte'}
+          </button>
+        ))}
+      </div>
+
+      {activeKriegsTab === 'macht' && (
+        <div className="space-y-8">
+          <div className="bg-gradient-to-br from-red-600 to-red-800 text-white p-12 rounded-2xl text-center">
+            <h3 className="text-5xl font-bold mb-4">DU HAST DIE MACHT! ✊</h3>
+            <p className="text-2xl">Was passiert wenn wir ALLE NEIN sagen?</p>
+          </div>
+          <div className="bg-white p-8 rounded-xl shadow-xl">
+            <h4 className="text-2xl font-bold text-center mb-6">📢 Würdest DU in den Krieg?</h4>
+            <div className="grid md:grid-cols-2 gap-4 mb-8">
+              {[
+                { id: 'nein', label: '❌ NEIN, niemals!' },
+                { id: 'verteidigung', label: '⚠️ Nur Verteidigung' },
+                { id: 'ja', label: '✅ Ja' },
+                { id: 'weissnicht', label: '🤷 Weiß nicht' },
+              ].map((opt) => (
+                <button key={opt.id} onClick={() => setUserVote(opt.id)}
+                  className={`p-4 rounded-lg border-2 font-bold ${
+                    userVote === opt.id ? 'border-purple-600 bg-purple-50' : 'border-gray-300'
+                  }`}>
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            {userVote && (
+              <div className="space-y-4 border-t pt-6">
+                <h5 className="text-xl font-bold text-center">📊 Ergebnisse ({totalVotes.toLocaleString()} Stimmen)</h5>
+                {[
+                  { label: '❌ NEIN', percent: voteStats.nein },
+                  { label: '⚠️ Verteidigung', percent: voteStats.verteidigung },
+                  { label: '✅ JA', percent: voteStats.ja },
+                  { label: '🤷 Weiß nicht', percent: voteStats.weissnicht },
+                ].map((r) => (
+                  <div key={r.label}>
+                    <div className="flex justify-between mb-1">
+                      <span>{r.label}</span>
+                      <span className="font-bold">{r.percent}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-4">
+                      <div className="bg-purple-600 h-4 rounded-full transition-all duration-1000" 
+                        style={{ width: `${r.percent}%` }} />
+                    </div>
+                  </div>
+                ))}
+                <div className="bg-green-50 p-4 rounded-lg text-center mt-6">
+                  <p className="text-green-800 font-bold">🎉 {voteStats.nein}% sagen NEIN!</p>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="bg-white p-8 rounded-xl">
+            <h4 className="text-2xl font-bold text-center mb-6">⚖️ Dein Recht</h4>
+            <div className="bg-blue-50 p-6 rounded-lg">
+              <p className="font-bold mb-2">Artikel 4 GG:</p>
+              <p className="italic">"Niemand darf gegen sein Gewissen zum Kriegsdienst gezwungen werden."</p>
+            </div>
+            <div className="bg-green-50 p-4 rounded-lg mt-4 text-center">
+              <p className="font-bold text-green-900">💪 DU HAST DAS RECHT NEIN ZU SAGEN!</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeKriegsTab === 'kosten' && (
+        <div className="space-y-8">
+          <div className="bg-gradient-to-br from-red-600 to-orange-600 text-white p-12 rounded-2xl text-center">
+            <h3 className="text-5xl font-bold mb-4">💰 Der wahre Preis des Krieges</h3>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white p-8 rounded-xl shadow-xl border-l-4 border-red-600">
+              <div className="text-5xl mb-4 text-center">💸</div>
+              <h4 className="text-2xl font-bold text-center mb-2">Pro Tag</h4>
+              <p className="text-4xl font-bold text-red-600 text-center mb-2">847 Mio €</p>
+              <p className="text-gray-600 text-center">Ukraine-Krieg kostet Deutschland täglich</p>
+            </div>
+            <div className="bg-white p-8 rounded-xl shadow-xl border-l-4 border-orange-600">
+              <div className="text-5xl mb-4 text-center">👤</div>
+              <h4 className="text-2xl font-bold text-center mb-2">Pro Bürger/Jahr</h4>
+              <p className="text-4xl font-bold text-orange-600 text-center mb-2">207 €</p>
+              <p className="text-gray-600 text-center">Das zahlst DU für diesen Krieg</p>
+            </div>
+          </div>
+          <div className="bg-gradient-to-br from-purple-600 to-purple-800 text-white p-8 rounded-xl">
+            <h4 className="text-2xl font-bold mb-6 text-center">🤔 Was könnten wir stattdessen machen?</h4>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { icon: '🏥', title: 'Gesundheit', desc: '50 neue Krankenhäuser/Jahr' },
+                { icon: '🏫', title: 'Bildung', desc: '100.000 neue Lehrer/Jahr' },
+                { icon: '🌱', title: 'Klima', desc: 'Komplette Solar-Infrastruktur' },
+              ].map((item) => (
+                <div key={item.title} className="bg-white bg-opacity-10 p-6 rounded-lg text-center">
+                  <div className="text-4xl mb-3">{item.icon}</div>
+                  <h5 className="font-bold text-lg mb-2">{item.title}</h5>
+                  <p className="text-sm">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-red-50 border-2 border-red-300 p-8 rounded-xl">
+            <h4 className="text-2xl font-bold text-red-900 mb-4 text-center">⚠️ Wohin fließt das Geld?</h4>
+            <div className="space-y-4">
+              {[
+                { label: 'Waffenlieferungen', percent: 45, amount: '13.9 Mrd €' },
+                { label: 'Militärische Ausbildung', percent: 25, amount: '7.7 Mrd €' },
+                { label: 'Humanitäre Hilfe', percent: 20, amount: '6.2 Mrd €' },
+                { label: 'Wiederaufbau', percent: 10, amount: '3.1 Mrd €' },
+              ].map((item) => (
+                <div key={item.label}>
+                  <div className="flex justify-between mb-1">
+                    <span className="font-medium">{item.label}</span>
+                    <span className="font-bold">{item.amount}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div className="bg-red-600 h-3 rounded-full" style={{ width: `${item.percent}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-center text-red-800 font-bold text-lg mt-6">Gesamt: 30.9 Milliarden € (Okt 2025)</p>
+          </div>
+        </div>
+      )}
+
+      {activeKriegsTab === 'medien' && (
+        <div className="space-y-8">
+          <div className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white p-12 rounded-2xl text-center">
+            <h3 className="text-5xl font-bold mb-4">📰 Medien vs. Realität</h3>
+            <p className="text-xl">Timeline der Versprechen & Lügen</p>
+          </div>
+          <div className="space-y-6">
+            {[
+              { date: 'Feb 2022', medien: 'Nur Defensiv-Waffen!', real: 'Heute: Panzer, Raketen, Jets' },
+              { date: 'Mrz 2022', medien: 'In 3 Monaten vorbei!', real: 'Okt 2025: Kein Ende' },
+              { date: 'Apr 2022', medien: 'Deutschland nicht involviert!', real: '30.9 Mrd € gezahlt' },
+              { date: 'Jun 2022', medien: 'Sanktionen stoppen Russland!', real: 'Russland umgeht sie' },
+              { date: 'Sep 2023', medien: 'Offensive wird erfolgreich!', real: 'Front kaum verändert' },
+              { date: 'Okt 2025', medien: 'Wir müssen durchhalten!', real: '600.000+ Tote' },
+            ].map((item) => (
+              <div key={item.date} className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-600">
+                <div className="text-sm font-bold text-gray-500 mb-2">{item.date}</div>
+                <div className="bg-blue-50 p-3 rounded-lg mb-3">
+                  <p className="font-medium text-blue-900">📺 Medien: "{item.medien}"</p>
+                </div>
+                <div className="bg-red-50 p-3 rounded-lg">
+                  <p className="font-bold text-red-900">⚠️ Realität: {item.real}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 text-white p-8 rounded-xl">
+            <h4 className="text-2xl font-bold mb-4 text-center">💀 Die Bilanz (Okt 2025)</h4>
+            <div className="grid md:grid-cols-3 gap-6 text-center">
+              <div>
+                <div className="text-4xl mb-2">☠️</div>
+                <p className="text-3xl font-bold text-red-400">600.000+</p>
+                <p className="text-gray-300">Tote & Verletzte</p>
+              </div>
+              <div>
+                <div className="text-4xl mb-2">🏚️</div>
+                <p className="text-3xl font-bold text-orange-400">8 Mio+</p>
+                <p className="text-gray-300">Flüchtlinge</p>
+              </div>
+              <div>
+                <div className="text-4xl mb-2">💰</div>
+                <p className="text-3xl font-bold text-yellow-400">1 Billion €</p>
+                <p className="text-gray-300">Wirtschaftsschaden</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeKriegsTab === 'frieden' && (
+        <div className="space-y-8">
+          <div className="bg-gradient-to-br from-green-600 to-emerald-600 text-white p-12 rounded-2xl text-center">
+            <h3 className="text-5xl font-bold mb-4">🕊️ Friedens-Alternativen</h3>
+            <p className="text-xl">Länder die es RICHTIG machen</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              { flag: '🇨🇭', land: 'Schweiz', seit: 'Neutral seit 1815', facts: ['210 Jahre KEIN Krieg', 'Höchste Lebensqualität', 'Vermittler weltweit'] },
+              { flag: '🇨🇷', land: 'Costa Rica', seit: 'Armee abgeschafft 1948', facts: ['77 Jahre ohne Armee', 'Friedlichstes Land Lateinamerikas', '99% Alphabetisierung'] },
+              { flag: '🇦🇹', land: 'Österreich', seit: 'Neutral seit 1955', facts: ['70 Jahre Neutralität', 'UNO-Sitz in Wien', 'Fokus auf Diplomatie'] },
+              { flag: '🇸🇪', land: 'Schweden', seit: 'Frieden seit 1814', facts: ['211 Jahre ohne Krieg', 'Humanitäre Großmacht', 'Wohlfahrtsstaat'] },
+            ].map((c) => (
+              <div key={c.land} className="bg-white p-8 rounded-xl shadow-xl border-t-4 border-green-600">
+                <div className="text-6xl text-center mb-4">{c.flag}</div>
+                <h4 className="text-2xl font-bold text-center mb-2">{c.land}</h4>
+                <p className="text-green-700 font-bold text-center mb-4">{c.seit}</p>
+                <ul className="space-y-2">
+                  {c.facts.map((f) => (
+                    <li key={f} className="flex items-start">
+                      <span className="text-green-600 mr-2">✓</span>
+                      <span className="text-gray-700">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white p-8 rounded-xl">
+            <h4 className="text-2xl font-bold mb-6 text-center">💡 Was wir lernen können</h4>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { icon: '🤝', title: 'Diplomatie', desc: 'Gespräche statt Waffen' },
+                { icon: '📚', title: 'Bildung', desc: 'In Menschen investieren' },
+                { icon: '🌍', title: 'Neutralität', desc: 'Nicht in fremde Kriege' },
+              ].map((l) => (
+                <div key={l.title} className="bg-white bg-opacity-10 p-6 rounded-lg text-center">
+                  <div className="text-4xl mb-3">{l.icon}</div>
+                  <h5 className="font-bold text-lg mb-2">{l.title}</h5>
+                  <p className="text-sm">{l.desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-center text-xl font-bold mt-8 text-yellow-300">Frieden ist möglich! 🕊️</p>
+          </div>
+        </div>
+      )}
+
+      {activeKriegsTab === 'weltkarte' && (
+        <div className="space-y-8">
+          <div className="bg-gradient-to-br from-red-600 to-red-800 text-white p-12 rounded-2xl text-center">
+            <h3 className="text-5xl font-bold mb-4">🌍 Kriege weltweit</h3>
+            <p className="text-xl">Stand: 17. Oktober 2025</p>
+            <p className="text-3xl font-bold mt-4 text-yellow-300">47 aktive Konflikte</p>
+          </div>
+          <div className="bg-white p-8 rounded-xl shadow-xl">
+            <h4 className="text-2xl font-bold text-center mb-6">📍 Nach Regionen</h4>
+            <div className="space-y-6">
+              {[
+                { region: '🌍 Afrika', count: 18, bsp: 'Sudan, Somalia, DR Kongo' },
+                { region: '🌏 Asien', count: 12, bsp: 'Myanmar, Afghanistan, Syrien' },
+                { region: '🌎 Amerika', count: 4, bsp: 'Mexiko, Haiti, Kolumbien' },
+                { region: '🇪🇺 Europa', count: 2, bsp: 'Ukraine-Russland, Kosovo' },
+                { region: '🌐 Naher Osten', count: 11, bsp: 'Israel-Palästina, Irak' },
+              ].map((a) => (
+                <div key={a.region} className="border-l-4 border-red-600 pl-6">
+                  <div className="flex justify-between items-center mb-2">
+                    <h5 className="text-xl font-bold">{a.region}</h5>
+                    <span className="bg-red-600 text-white px-4 py-1 rounded-full font-bold">{a.count}</span>
+                  </div>
+                  <p className="text-gray-600">Beispiele: {a.bsp}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { icon: '💀', num: '120.000+', txt: 'Tote in 2025' },
+              { icon: '🏚️', num: '100 Mio+', txt: 'Auf der Flucht' },
+              { icon: '😢', num: '2.2 Mrd', txt: 'In Konflikt-Gebieten' },
+            ].map((s) => (
+              <div key={s.txt} className="bg-gradient-to-br from-gray-800 to-gray-900 text-white p-8 rounded-xl text-center">
+                <div className="text-5xl mb-4">{s.icon}</div>
+                <p className="text-3xl font-bold mb-2">{s.num}</p>
+                <p className="text-gray-300">{s.txt}</p>
+              </div>
+            ))}
+          </div>
+          <div className="bg-gradient-to-br from-orange-600 to-red-600 text-white p-8 rounded-xl">
+            <h4 className="text-2xl font-bold mb-4 text-center">💰 Militär-Ausgaben 2025</h4>
+            <div className="text-center mb-6">
+              <p className="text-5xl font-bold mb-2">2.4 Billionen €</p>
+              <p className="text-xl">Pro Jahr für Krieg</p>
+            </div>
+            <div className="bg-white bg-opacity-10 p-6 rounded-lg">
+              <h5 className="font-bold text-lg mb-4 text-center">💭 Stell dir vor...</h5>
+              <ul className="space-y-2">
+                <li>✓ Hunger beenden: 30 Mrd € (1.2%)</li>
+                <li>✓ Sauberes Wasser: 28 Mrd € (1.1%)</li>
+                <li>✓ Alle Kinder zur Schule: 39 Mrd € (1.6%)</li>
+                <li>✓ Klima stoppen: 300 Mrd € (12.5%)</li>
+              </ul>
+              <p className="text-center text-xl font-bold mt-6 text-yellow-300">
+                Mit 16% könnten wir die Welt retten.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  const PlaceholderPage = ({ title, icon: Icon }) => (
+    <div className="bg-white p-12 rounded-xl text-center">
+      <Icon className="w-20 h-20 text-purple-600 mx-auto mb-6" />
+      <h2 className="text-3xl font-bold mb-4">{title}</h2>
+      <p className="text-xl mb-8">Kommt bald!</p>
+      <button onClick={() => handlePageChange('home')} 
+        className="bg-purple-600 text-white px-6 py-3 rounded-lg font-bold">Zurück</button>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {currentPage === 'home' && <HomePage />}
+        {currentPage === 'politiker' && <PolitikerPage />}
+        {currentPage === 'krieg' && <KriegsCheckPage />}
+        {currentPage === 'gesetze' && <GesetzesradarPage />}
+        {currentPage === 'parteien' && <ParteienPage />}
+        {currentPage === 'transparenz' && <PlaceholderPage title="Transparenz-Index" icon={DollarSign} />}
+        {currentPage === 'missstaende' && <PlaceholderPage title="Missstandsradar" icon={AlertCircle} />}
+      </main>
+    </div>
+  );
+};
+
+export default ValkspolitikApp;

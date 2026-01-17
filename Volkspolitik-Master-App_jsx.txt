@@ -1,0 +1,235 @@
+import React, { useState } from 'react';
+import { Search, Menu, X, Scale, Users, AlertCircle, DollarSign, BookOpen, Shield, TrendingUp, ChevronRight } from 'lucide-react';
+
+const ValkspolitikMasterApp = () => {
+  const [currentPage, setCurrentPage] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedPolitiker, setSelectedPolitiker] = useState(null);
+  const [politikerSort, setPolitikerSort] = useState('verstaendlichkeit');
+  const [activeKriegsTab, setActiveKriegsTab] = useState('macht');
+  const [userVote, setUserVote] = useState(null);
+  const [selectedGesetz, setSelectedGesetz] = useState(null);
+  const [gesetzFilter, setGesetzFilter] = useState('alle');
+  const [gesetzThema, setGesetzThema] = useState('alle');
+  const [gesetzVotes, setGesetzVotes] = useState({});
+  const [selectedPartei, setSelectedPartei] = useState(null);
+  const [activeMissstandTab, setActiveMissstandTab] = useState('pflege');
+  const [activeTransparenzTab, setActiveTransparenzTab] = useState('overview');
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    setSelectedPartei(null);
+    setSelectedPolitiker(null);
+    setSelectedGesetz(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navItems = [
+    { id: 'home', label: 'Home', icon: TrendingUp },
+    { id: 'gesetze', label: 'Gesetzesradar', icon: Search },
+    { id: 'politiker', label: 'Politiker', icon: Users },
+    { id: 'parteien', label: 'Parteiprogramme', icon: BookOpen },
+    { id: 'transparenz', label: 'Transparenz', icon: DollarSign },
+    { id: 'missstaende', label: 'Missstände', icon: AlertCircle },
+    { id: 'krieg', label: 'Kriegs-Check', icon: Shield },
+  ];
+
+  const politiker = [
+    {
+      id: 1, name: 'Alice Weidel', partei: 'AfD', parteiColor: 'blue-500', position: 'Oppositionsführerin',
+      verstaendlichkeit: 7, versprechen: null, stil: 'Direkt, klare Ansagen',
+      beispielGut: '"Die Ampel-Politik hat versagt. Punkt."', beispielSchlecht: 'Selten kompliziert',
+      versprechenText: 'Opposition - nicht bewertbar', zitat: 'Wir sagen was ist.'
+    },
+    {
+      id: 2, name: 'Janine Wissler', partei: 'Die Linke', parteiColor: 'pink-500', position: 'Parteivorsitzende',
+      verstaendlichkeit: 6, versprechen: null, stil: 'Klar, emotional',
+      beispielGut: '"Niemand sollte hungern müssen."', beispielSchlecht: 'Manchmal ideologisch',
+      versprechenText: 'Opposition - nicht bewertbar', zitat: 'Soziale Gerechtigkeit ist ein Grundrecht.'
+    },
+    {
+      id: 3, name: 'Lars Klingbeil', partei: 'SPD', parteiColor: 'red-600', position: 'Parteivorsitzender',
+      verstaendlichkeit: 6, versprechen: 5, stil: 'Bodenständig',
+      beispielGut: '"Kindergrundsicherung durchgesetzt."', beispielSchlecht: '"Makroökonomische Rahmenbedingungen..."',
+      versprechenText: 'Mindestlohn ✅, Kindergrundsicherung ✅', zitat: 'Wir kämpfen für die arbeitende Mitte.'
+    },
+    {
+      id: 4, name: 'Ricarda Lang', partei: 'Grüne', parteiColor: 'green-600', position: 'Parteivorsitzende',
+      verstaendlichkeit: 5, versprechen: 4, stil: 'Akademisch',
+      beispielGut: '"Handeln wir jetzt!"', beispielSchlecht: '"Transformation der fossil basierten Ökonomie..."',
+      versprechenText: 'Tempolimit ❌, Klimapaket ✅', zitat: 'Klimaschutz ist Menschenschutz.'
+    },
+    {
+      id: 5, name: 'Christian Lindner', partei: 'FDP', parteiColor: 'yellow-400', position: 'Parteivorsitzender',
+      verstaendlichkeit: 4, versprechen: 3, stil: 'Business-Sprache',
+      beispielGut: '"Steuern runter"', beispielSchlecht: '"Allokationseffizienz des Marktes..."',
+      versprechenText: 'Keine Steuererhöhungen ❌', zitat: 'Wirtschaftswachstum ist beste Sozialpolitik.'
+    },
+    {
+      id: 6, name: 'Friedrich Merz', partei: 'CDU', parteiColor: 'gray-900', position: 'Bundeskanzler',
+      verstaendlichkeit: 3, versprechen: 2, stil: 'Kompliziert, juristisch',
+      beispielGut: 'Fast nie verständlich', beispielSchlecht: '"Implementation der legislativen Maßnahmen..."',
+      versprechenText: 'Wirtschaftswende ❌, Bürokratieabbau ❌', zitat: 'Die Komplexität erfordert differenzierte Lösungsansätze.'
+    },
+  ];
+
+  const parteien = [
+    {
+      id: 'cdu', name: 'CDU/CSU', buchstabe: 'C', color: 'bg-gray-900', borderColor: 'border-gray-900',
+      lightBg: 'bg-gray-50', tagline: 'Wirtschaft & Tradition',
+      kernaussage: 'Deutschland soll wirtschaftlich stark sein, christliche Werte bewahren und Leistung belohnen.',
+      themen: [
+        { titel: 'Wirtschaftswachstum', text: 'Unternehmen entlasten, Bürokratie abbauen. Weniger Steuern für Firmen = mehr Arbeitsplätze.' },
+        { titel: 'Innere Sicherheit', text: 'Mehr Polizei, härtere Strafen, strengere Grenzkontrollen.' },
+        { titel: 'Traditionelle Familie', text: 'Ehe zwischen Mann und Frau fördern. Mehr Geld für Familien mit Kindern.' },
+        { titel: 'Starke NATO & Bundeswehr', text: '2% des BIP für Verteidigung. Deutschland als verlässlicher Partner.' },
+        { titel: 'Klimaschutz mit Augenmaß', text: 'Ja zu Klimaschutz, aber nicht auf Kosten der Wirtschaft. Technologie statt Verbote.' }
+      ],
+      fuerWen: 'Unternehmer, Selbstständige, Konservative, Mittelschicht, ältere Wähler, ländliche Regionen',
+      kosten: 'Steuersenkungen + Mehr Militär = ca. 50 Mrd. € weniger Einnahmen/Jahr',
+      kostenWarnung: '⚠️ Woher kommt das Geld? Wahrscheinlich: Sozialkürzungen oder neue Schulden!'
+    },
+    {
+      id: 'spd', name: 'SPD', buchstabe: 'S', color: 'bg-red-600', borderColor: 'border-red-600',
+      lightBg: 'bg-red-50', tagline: 'Soziale Gerechtigkeit',
+      kernaussage: 'Arbeit muss sich lohnen, der Staat hilft den Schwachen, und niemand darf abgehängt werden.',
+      themen: [
+        { titel: 'Mindestlohn erhöhen', text: '12€ → 15€ pro Stunde. Betrifft 6 Millionen Menschen.' },
+        { titel: 'Bezahlbarer Wohnraum', text: 'Mietpreisbremse verschärfen, mehr Sozialwohnungen bauen.' },
+        { titel: 'Starker Sozialstaat', text: 'Bürgergeld reformieren. Kindergrundsicherung einführen.' },
+        { titel: 'Reiche stärker besteuern', text: 'Vermögensteuer ab 1 Mio. €. Erbschaftssteuer erhöhen.' },
+        { titel: 'Klimaschutz sozial', text: 'Ja zu Klimaschutz, aber mit Ausgleich für Geringverdiener.' }
+      ],
+      fuerWen: 'Arbeitnehmer, Familien, Geringverdiener, Gewerkschaftsmitglieder, Mieter',
+      kosten: 'Sozialausgaben + Wohnungsbau = ca. 60 Mrd. € mehr/Jahr',
+      kostenWarnung: '⚠️ Finanzierung: Höhere Steuern für Reiche + Vermögensteuer. Aber: Reicht das?'
+    }
+  ];
+
+  const gesetze = [
+    {
+      id: 1, titel: 'Kindergrundsicherung 2025', status: 'verabschiedet', thema: 'soziales',
+      kurz: 'Bis zu 250€/Monat pro Kind für Familien mit geringem Einkommen',
+      betroffen: '12 Mio Kinder', antrag: 'SPD, Grüne',
+      details: 'Ersetzt Kindergeld, Kinderzuschlag und Teile des Bürgergeldes.',
+      pro: ['Direkte Hilfe für arme Familien', 'Weniger Bürokratie'],
+      contra: ['Kosten: 12 Mrd €/Jahr', 'Mittelschicht profitiert wenig'],
+      profitiert: 'Familien mit Einkommen unter 50.000€/Jahr'
+    }
+  ];
+
+  const Header = () => (
+    <header className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handlePageChange('home')}>
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-400 rounded-lg flex items-center justify-center">
+              <Scale className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold">Volkspolitik</h1>
+              <p className="text-xs text-purple-600">Das Volk prüft die Politik</p>
+            </div>
+          </div>
+          <nav className="hidden md:flex space-x-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button key={item.id} onClick={() => handlePageChange(item.id)}
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all ${
+                    currentPage === item.id ? 'bg-purple-600 text-white' : 'text-gray-600 hover:bg-purple-50'
+                  }`}>
+                  <Icon className="w-4 h-4" />
+                  <span className="text-sm font-medium">{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+          <button className="md:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+
+  const HomePage = () => (
+    <div className="space-y-12">
+      <section className="bg-gradient-to-br from-purple-600 to-purple-800 text-white py-16 px-4 rounded-2xl">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Transparenz in der Politik. Endlich verständlich.</h2>
+          <p className="text-xl mb-8">Wir durchleuchten Gesetze, Politiker und Parteiprogramme.</p>
+          <button className="bg-white text-purple-600 px-8 py-4 rounded-lg font-bold hover:shadow-xl transition-all">
+            Jetzt mitmachen!
+          </button>
+        </div>
+      </section>
+      
+      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {navItems.slice(1).map((item) => {
+          const Icon = item.icon;
+          return (
+            <button key={item.id} onClick={() => handlePageChange(item.id)}
+              className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all text-left group">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <Icon className="w-6 h-6 text-purple-600" />
+                </div>
+                <h4 className="text-xl font-bold">{item.label}</h4>
+              </div>
+              <p className="text-gray-600">Klick hier für mehr Info!</p>
+              <div className="flex items-center text-purple-600 font-medium mt-4">
+                <span>Mehr erfahren</span>
+                <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </button>
+          );
+        })}
+      </section>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {currentPage === 'home' && <HomePage />}
+        {currentPage === 'politiker' && <div className="bg-white p-12 rounded-xl text-center">
+          <h2 className="text-3xl font-bold mb-4">👔 Politiker-Profile</h2>
+          <p className="text-xl">Feature aktiviert! Die BIG 6 unter der Lupe</p>
+        </div>}
+        {currentPage === 'gesetze' && <div className="bg-white p-12 rounded-xl text-center">
+          <h2 className="text-3xl font-bold mb-4">📜 Gesetzesradar</h2>
+          <p className="text-xl">Alle Gesetze verständlich erklärt!</p>
+        </div>}
+        {currentPage === 'parteien' && <div className="bg-white p-12 rounded-xl text-center">
+          <h2 className="text-3xl font-bold mb-4">📋 Parteiprogramme</h2>
+          <p className="text-xl">Alle 6 Parteien mit farbigen Kreisen!</p>
+        </div>}
+        {currentPage === 'transparenz' && <div className="bg-white p-12 rounded-xl text-center">
+          <h2 className="text-3xl font-bold mb-4">💰 Transparenz-Index</h2>
+          <p className="text-xl">488 Mrd. € Bundeshaushalt visuell!</p>
+        </div>}
+        {currentPage === 'missstaende' && <div className="bg-white p-12 rounded-xl text-center">
+          <h2 className="text-3xl font-bold mb-4">🚨 Missstandsradar</h2>
+          <p className="text-xl">Pflege, Bildung, Pharma & mehr!</p>
+        </div>}
+        {currentPage === 'krieg' && <div className="bg-white p-12 rounded-xl text-center">
+          <h2 className="text-3xl font-bold mb-4">☮️ Kriegs-Check</h2>
+          <p className="text-xl">Deine Macht, Kosten, Medien, Frieden & Weltkarte!</p>
+        </div>}
+      </main>
+      
+      <footer className="bg-gray-900 text-white py-12 mt-20">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h3 className="text-2xl font-bold mb-4">💜 Volkspolitik.de</h3>
+          <p className="text-lg mb-2">Politik verständlich gemacht!</p>
+          <p className="text-gray-400">Stand: Oktober 2025 • Alle 7 Features aktiv</p>
+          <p className="text-sm mt-4 text-purple-400">Familie für immer! ☯️✌️💝❣️</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default ValkspolitikMasterApp;

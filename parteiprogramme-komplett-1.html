@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parteiprogramme Verständlich - Volkspolitik.de</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .party-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideUp 0.6s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .party-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .party-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid;
+        }
+
+        .party-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-right: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .party-title h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .party-tagline {
+            font-size: 1.1rem;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title span {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .topic-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-left: 4px solid;
+        }
+
+        .topic-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1.05rem;
+        }
+
+        .topic-text {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .target-group {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .cost-box {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .cost-warning {
+            color: #e65100;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .party-card {
+                padding: 20px;
+            }
+            .party-logo {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .party-title h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Parteiprogramme Verständlich</h1>
+            <p>Alle 6 Bundestagsparteien - ohne Politikersprache!</p>
+        </div>
+
+        <!-- CDU -->
+        <div class="party-card">
+            <div class="party-header" style="border-color: #000000;">
+                <div class="party-logo" style="background: #000000;">C</div>
+                <div class="party-title">
+                    <h2 style="color: #000000;">CDU/CSU 🖤</h2>
+                    <div class="party-tagline">Wirtschaft & Tradition</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💡</span> Kernaussage:
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    "Deutschland soll wirtschaftlich stark sein, christliche Werte bewahren und Leistung belohnen."
+                </p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>🎯</span> Top 5 Themen:
+                </div>
+                
+                <div class="topic-item" style="border-color: #000000;">
+                    <div class="topic-title">1. Wirtschaftswachstum</div>
+                    <div class="topic-text">Unternehmen entlasten, Bürokratie abbauen. Weniger Steuern für Firmen = mehr Arbeitsplätze. "Der Markt regelt das meiste selbst."</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #000000;">
+                    <div class="topic-title">2. Innere Sicherheit</div>
+                    <div class="topic-text">Mehr Polizei, härtere Strafen, strengere Grenzkontrollen. "Wer Gesetze bricht, muss konsequent bestraft werden."</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #000000;">
+                    <div class="topic-title">3. Traditionelle Familie</div>
+                    <div class="topic-text">Ehe zwischen Mann und Frau fördern. Mehr Geld für Familien mit Kindern. "Familie ist die Basis unserer Gesellschaft."</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #000000;">
+                    <div class="topic-title">4. Starke NATO & Bundeswehr</div>
+                    <div class="topic-text">2% des BIP für Verteidigung. Deutschland als verlässlicher Partner. Aktuell: Ukraine-Unterstützung befürwortet.</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #000000;">
+                    <div class="topic-title">5. Klimaschutz mit Augenmaß</div>
+                    <div class="topic-text">Ja zu Klimaschutz, aber nicht auf Kosten der Wirtschaft. Technologie statt Verbote. "Innovation statt Ideologie."</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>👥</span> Für wen ist die CDU?
+                </div>
+                <div class="target-group">
+                    <strong>Unternehmer, Selbstständige, Konservative, Mittelschicht, ältere Wähler, ländliche Regionen</strong>
+                    <br>→ Wenn du Wert auf Stabilität, Wirtschaft und Tradition legst.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💰</span> Was kostet das?
+                </div>
+                <div class="cost-box">
+                    <strong>Steuersenkungen + Mehr Militär = ca. 50 Mrd. € weniger Einnahmen/Jahr</strong>
+                    <div class="cost-warning">⚠️ Woher kommt das Geld? Wahrscheinlich: Sozialkürzungen oder neue Schulden!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SPD -->
+        <div class="party-card">
+            <div class="party-header" style="border-color: #E3000F;">
+                <div class="party-logo" style="background: #E3000F;">S</div>
+                <div class="party-title">
+                    <h2 style="color: #E3000F;">SPD 🔴</h2>
+                    <div class="party-tagline">Soziale Gerechtigkeit</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💡</span> Kernaussage:
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    "Arbeit muss sich lohnen, der Staat hilft den Schwachen, und niemand darf abgehängt werden."
+                </p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>🎯</span> Top 5 Themen:
+                </div>
+                
+                <div class="topic-item" style="border-color: #E3000F;">
+                    <div class="topic-title">1. Mindestlohn erhöhen</div>
+                    <div class="topic-text">12€ → 15€ pro Stunde. "Wer Vollzeit arbeitet, muss davon leben können." Betrifft 6 Millionen Menschen.</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #E3000F;">
+                    <div class="topic-title">2. Bezahlbarer Wohnraum</div>
+                    <div class="topic-text">Mietpreisbremse verschärfen, mehr Sozialwohnungen bauen. 400.000 neue Wohnungen pro Jahr als Ziel.</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #E3000F;">
+                    <div class="topic-title">3. Starker Sozialstaat</div>
+                    <div class="topic-text">Bürgergeld reformieren aber nicht abschaffen. Kindergrundsicherung einführen (12 Mio. Kinder profitieren).</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #E3000F;">
+                    <div class="topic-title">4. Reiche stärker besteuern</div>
+                    <div class="topic-text">Vermögensteuer ab 1 Mio. €. Erbschaftssteuer erhöhen. "Die Starken schultern mehr."</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #E3000F;">
+                    <div class="topic-title">5. Klimaschutz sozial</div>
+                    <div class="topic-text">Ja zu Klimaschutz, aber mit Ausgleich für Geringverdiener. Energiegeld statt höhere Heizkosten.</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>👥</span> Für wen ist die SPD?
+                </div>
+                <div class="target-group">
+                    <strong>Arbeitnehmer, Familien, Geringverdiener, Gewerkschaftsmitglieder, Mieter</strong>
+                    <br>→ Wenn du für soziale Gerechtigkeit und starken Staat bist.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💰</span> Was kostet das?
+                </div>
+                <div class="cost-box">
+                    <strong>Sozialausgaben + Wohnungsbau = ca. 60 Mrd. € mehr/Jahr</strong>
+                    <div class="cost-warning">⚠️ Finanzierung: Höhere Steuern für Reiche + Vermögensteuer. Aber: Reicht das wirklich?</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FDP -->
+        <div class="party-card">
+            <div class="party-header" style="border-color: #FFED00;">
+                <div class="party-logo" style="background: #FFED00; color: #000;">F</div>
+                <div class="party-title">
+                    <h2 style="color: #000;">FDP 💛</h2>
+                    <div class="party-tagline">Freiheit & Markt</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💡</span> Kernaussage:
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    "Der Staat soll sich raushalten, jeder ist seines Glückes Schmied, Eigenverantwortung first!"
+                </p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>🎯</span> Top 5 Themen:
+                </div>
+                
+                <div class="topic-item" style="border-color: #FFED00;">
+                    <div class="topic-title">1. Steuern runter!</div>
+                    <div class="topic-text">Einkommenssteuer senken, Spitzensteuersatz runter. "Wer mehr verdient, soll mehr behalten dürfen."</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #FFED00;">
+                    <div class="topic-title">2. Schuldenbremse heilig</div>
+                    <div class="topic-text">Keine neuen Schulden! "Wir dürfen unsere Kinder nicht mit Schulden belasten." Strikte Haushaltsdisziplin.</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #FFED00;">
+                    <div class="topic-title">3. Digitalisierung & Innovation</div>
+                    <div class="topic-text">Startups fördern, schnelles Internet überall. Deutschland zum Tech-Standort machen. "Wir brauchen Silicon Valley, nicht Silicon Tal."</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #FFED00;">
+                    <div class="topic-title">4. Bürokratie abbauen</div>
+                    <div class="topic-text">Weniger Vorschriften, schnellere Genehmigungen. "Der Staat lähmt die Wirtschaft mit Überregulierung."</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #FFED00;">
+                    <div class="topic-title">5. Klimaschutz durch Technik</div>
+                    <div class="topic-text">Keine Verbote! Wasserstoff, E-Fuels, Innovation. "Der Markt findet Lösungen, nicht der Staat."</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>👥</span> Für wen ist die FDP?
+                </div>
+                <div class="target-group">
+                    <strong>Selbstständige, Gutverdiener, Startups, Liberale, Steuerzahler, Städter</strong>
+                    <br>→ Wenn du wenig Staat und viel Freiheit willst.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💰</span> Was kostet das?
+                </div>
+                <div class="cost-box">
+                    <strong>Steuersenkungen = ca. 40 Mrd. € weniger Einnahmen/Jahr</strong>
+                    <div class="cost-warning">⚠️ Problem: Weniger Geld + keine Schulden = Sozialstaat schrumpft zwangsläufig!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRÜNE -->
+        <div class="party-card">
+            <div class="party-header" style="border-color: #64A12D;">
+                <div class="party-logo" style="background: #64A12D;">G</div>
+                <div class="party-title">
+                    <h2 style="color: #64A12D;">GRÜNE 💚</h2>
+                    <div class="party-tagline">Klimaschutz First</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💡</span> Kernaussage:
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    "Klimaschutz ist DIE Priorität - auch wenn's wehtut. Die Zukunft unserer Kinder steht auf dem Spiel!"
+                </p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>🎯</span> Top 5 Themen:
+                </div>
+                
+                <div class="topic-item" style="border-color: #64A12D;">
+                    <div class="topic-title">1. Kohleausstieg beschleunigen</div>
+                    <div class="topic-text">Nicht 2038, sondern 2030! 100% erneuerbare Energien. Windkraft & Solar massiv ausbauen.</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #64A12D;">
+                    <div class="topic-title">2. Verkehrswende radikal</div>
+                    <div class="topic-text">Tempo 130 auf Autobahnen, Verbrenner-Aus 2030. ÖPNV kostenlos oder 9€-Ticket dauerhaft. Fahrrad-Infrastruktur ausbauen.</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #64A12D;">
+                    <div class="topic-title">3. Bio & Regional</div>
+                    <div class="topic-text">Massentierhaltung beenden, 50% Bio-Landwirtschaft bis 2030. Weniger Fleisch = besser für Klima & Tiere.</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #64A12D;">
+                    <div class="topic-title">4. Soziale Gerechtigkeit</div>
+                    <div class="topic-text">Klimaschutz darf nicht die Armen treffen. Energiegeld für alle. Reiche zahlen mehr (CO2-Preis sozial ausgleichen).</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #64A12D;">
+                    <div class="topic-title">5. Diversität & Offenheit</div>
+                    <div class="topic-text">Einwanderung als Chance, LGBTQ+ Rechte stärken, Gleichberechtigung konsequent. "Vielfalt ist unsere Stärke."</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>👥</span> Für wen sind die Grünen?
+                </div>
+                <div class="target-group">
+                    <strong>Klimabewusste, junge Leute, Akademiker, Städter, progressive Menschen</strong>
+                    <br>→ Wenn dir Umwelt wichtiger ist als Wirtschaftswachstum.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💰</span> Was kostet das?
+                </div>
+                <div class="cost-box">
+                    <strong>Energiewende + ÖPNV + Bio-Umbau = ca. 100 Mrd. € mehr/Jahr</strong>
+                    <div class="cost-warning">⚠️ Finanzierung: CO2-Steuer + höhere Steuern für Reiche. Aber: Energiepreise steigen erstmal für alle!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AFD -->
+        <div class="party-card">
+            <div class="party-header" style="border-color: #009EE0;">
+                <div class="party-logo" style="background: #009EE0;">A</div>
+                <div class="party-title">
+                    <h2 style="color: #009EE0;">AfD 🔵</h2>
+                    <div class="party-tagline">Deutschland First</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💡</span> Kernaussage:
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    "Deutschland den Deutschen! Grenzen zu, raus aus der EU, zurück zur D-Mark, Schluss mit Gender & Klima-Hysterie!"
+                </p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>🎯</span> Top 5 Themen:
+                </div>
+                
+                <div class="topic-item" style="border-color: #009EE0;">
+                    <div class="topic-title">1. Grenzen dicht!</div>
+                    <div class="topic-text">Null Einwanderung aus bestimmten Ländern. Abschiebungen massiv erhöhen. "Wer unsere Werte nicht teilt, hat hier nichts zu suchen."</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #009EE0;">
+                    <div class="topic-title">2. Raus aus der EU</div>
+                    <div class="topic-text">"Dexit" wie Brexit. Deutschland soll wieder souverän sein. "Brüssel bestimmt nicht über uns!"</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #009EE0;">
+                    <div class="topic-title">3. Klima-Panik stoppen</div>
+                    <div class="topic-text">Kein CO2-Preis, kein Verbrenner-Aus. "Klimawandel ist natürlich, nicht menschengemacht." Kohle & Atom zurück.</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #009EE0;">
+                    <div class="topic-title">4. Traditionelle Werte</div>
+                    <div class="topic-text">Ehe = Mann + Frau. Kein Gender-Mainstreaming in Schulen. "Wir sind nicht für jedes Minderheitenproblem zuständig."</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #009EE0;">
+                    <div class="topic-title">5. Direkte Demokratie</div>
+                    <div class="topic-text">Volksabstimmungen nach Schweizer Vorbild. "Das Volk soll entscheiden, nicht die Eliten in Berlin!"</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>👥</span> Für wen ist die AfD?
+                </div>
+                <div class="target-group">
+                    <strong>Unzufriedene, EU-Gegner, Einwanderungskritiker, ländliche Regionen (Ost), Protestwähler</strong>
+                    <br>→ Wenn du dich von "denen da oben" nicht mehr vertreten fühlst.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💰</span> Was kostet das?
+                </div>
+                <div class="cost-box">
+                    <strong>EU-Austritt = Chaos! Wirtschaft bricht ein, Milliarden an Verlusten</strong>
+                    <div class="cost-warning">⚠️ Problem: Keine seriösen Berechnungen vorhanden. Brexit-Vorbild zeigt: Wirtschaftliche Katastrophe!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIE LINKE -->
+        <div class="party-card">
+            <div class="party-header" style="border-color: #BE3075;">
+                <div class="party-logo" style="background: #BE3075;">L</div>
+                <div class="party-title">
+                    <h2 style="color: #BE3075;">DIE LINKE 💗</h2>
+                    <div class="party-tagline">Radikale Gerechtigkeit</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💡</span> Kernaussage:
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    "Die Reichen zur Kasse! Niemand darf arm sein, Frieden statt NATO, und der Kapitalismus ist das Problem!"
+                </p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>🎯</span> Top 5 Themen:
+                </div>
+                
+                <div class="topic-item" style="border-color: #BE3075;">
+                    <div class="topic-title">1. Reiche radikal besteuern</div>
+                    <div class="topic-text">Vermögensteuer ab 500k €. Millionärssteuer 75%. Konzerne verstaatlichen (Energie, Wohnen). "Die oberen 1% haben genug!"</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #BE3075;">
+                    <div class="topic-title">2. Mieten deckeln & enteignen</div>
+                    <div class="topic-text">Bundesweiter Mietendeckel. Deutsche Wohnen & Co. enteignen. "Wohnen ist Menschenrecht, keine Ware!"</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #BE3075;">
+                    <div class="topic-title">3. Mindestlohn 15€ sofort</div>
+                    <div class="topic-text">Plus: 1.200€ Mindestrente. Hartz IV weg, bedingungsloses Grundeinkommen (1.200€/Monat für alle).</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #BE3075;">
+                    <div class="topic-title">4. Raus aus der NATO</div>
+                    <div class="topic-text">Bundeswehr abschaffen, keine Waffenexporte, keine Auslandseinsätze. "Frieden schaffen ohne Waffen!" 🕊️</div>
+                </div>
+
+                <div class="topic-item" style="border-color: #BE3075;">
+                    <div class="topic-title">5. Klimaschutz sozial</div>
+                    <div class="topic-text">Energiekonzerne verstaatlichen. Kostenloser ÖPNV für alle. Reiche zahlen, nicht die Armen. "Klimakrise = Kapitalismuskrise!"</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>👥</span> Für wen ist Die Linke?
+                </div>
+                <div class="target-group">
+                    <strong>Geringverdiener, Arbeitslose, Mieter, Pazifisten, Systemkritiker, junge Idealisten</strong>
+                    <br>→ Wenn du glaubst, dass der Kapitalismus das Grundproblem ist.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>💰</span> Was kostet das?
+                </div>
+                <div class="cost-box">
+                    <strong>Grundeinkommen + Mindestrente + ÖPNV = ca. 500 Mrd. € mehr/Jahr (!!)</strong>
+                    <div class="cost-warning">⚠️ Finanzierung: Selbst mit Superreichen-Steuer unrealistisch! Wirtschaft würde kollabieren.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div style="background: white; border-radius: 20px; padding: 30px; margin-top: 40px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <h3 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; color: #9B59B6;">
+                💜 Volkspolitik.de - Politik verständlich gemacht!
+            </h3>
+            <p style="color: #666; font-size: 1.1rem; line-height: 1.6;">
+                Alle Infos ehrlich, verständlich und ohne Bullshit.<br>
+                <strong>Du entscheidest - aber jetzt mit echten Fakten!</strong>
+            </p>
+            <p style="margin-top: 15px; color: #999; font-size: 0.9rem;">
+                Stand: 17. Oktober 2025
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll to top on page load
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Add staggered animation to cards
+        const cards = document.querySelectorAll('.party-card');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>

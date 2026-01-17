@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparenz-Index - Volkspolitik.de</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .budget-bar {
+            transition: width 1.5s ease-out;
+        }
+        .budget-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 4px solid white;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade { animation: fadeIn 0.8s ease-out; }
+        .animate-pulse-slow { animation: pulse 3s infinite; }
+        .animate-slide { animation: slideUp 0.6s ease-out; }
+        @media (max-width: 768px) {
+            .budget-circle {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="text-white p-5">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-10 p-8 bg-white/10 rounded-3xl backdrop-blur-lg animate-fade">
+            <div class="budget-circle bg-gradient-to-br from-purple-600 to-purple-400 mb-4 mx-auto">
+                <span class="text-white">💰</span>
+            </div>
+            <h1 class="text-5xl font-bold mb-4">Transparenz-Index</h1>
+            <p class="text-xl opacity-90">Wohin fließen deine Steuergelder wirklich?</p>
+            <p class="text-sm mt-2 opacity-75">Stand: Bundeshaushalt 2025</p>
+        </div>
+
+        <!-- Total Budget -->
+        <div class="bg-gradient-to-r from-yellow-400 to-yellow-300 text-gray-900 p-10 rounded-3xl text-center mb-8 shadow-2xl animate-slide">
+            <div class="text-xl font-bold mb-2">🇩🇪 BUNDESHAUSHALT 2025</div>
+            <div class="text-6xl font-bold text-purple-600 my-4">488 Mrd. €</div>
+            <p class="text-lg">Das gibt Deutschland dieses Jahr aus</p>
+            <p class="text-sm mt-2 opacity-75">= 5.810 € pro Bürger (inkl. Kinder!)</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-3 mb-8 flex-wrap">
+            <button onclick="showTab('overview')" class="tab-btn flex-1 min-w-[150px] px-6 py-4 rounded-xl font-bold bg-yellow-400 text-gray-900 shadow-lg">
+                📊 ÜBERSICHT
+            </button>
+            <button onclick="showTab('comparison')" class="tab-btn flex-1 min-w-[150px] px-6 py-4 rounded-xl font-bold bg-white/10 hover:bg-white/20">
+                🔍 VERGLEICHE
+            </button>
+            <button onclick="showTab('percitizen')" class="tab-btn flex-1 min-w-[150px] px-6 py-4 rounded-xl font-bold bg-white/10 hover:bg-white/20">
+                👤 PRO BÜRGER
+            </button>
+        </div>
+
+        <!-- Overview Content -->
+        <div id="overview-content" class="tab-content">
+            <div class="bg-white text-gray-900 rounded-3xl p-8 mb-8">
+                <h2 class="text-3xl font-bold text-purple-600 mb-8 text-center">📊 WOHIN FLIESSEN DIE 488 MILLIARDEN?</h2>
+                
+                <div class="space-y-6">
+                    <div class="bg-gray-50 p-5 rounded-xl hover:translate-x-2 transition-transform">
+                        <div class="flex justify-between items-center mb-3 font-bold">
+                            <span class="text-lg">💰 Soziales & Arbeit</span>
+                            <span class="text-xl text-purple-600">176 Mrd. € (36%)</span>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-8 overflow-hidden">
+                            <div class="budget-bar h-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-end px-4 text-white font-bold" style="width: 36%;">36%</div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Rente, Bürgergeld, Kindergeld, Arbeitslosengeld</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-xl hover:translate-x-2 transition-transform">
+                        <div class="flex justify-between items-center mb-3 font-bold">
+                            <span class="text-lg">🛡️ Verteidigung & Militär</span>
+                            <span class="text-xl text-purple-600">72 Mrd. € (15%)</span>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-8 overflow-hidden">
+                            <div class="budget-bar h-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-end px-4 text-white font-bold" style="width: 15%;">15%</div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Bundeswehr, Waffen, NATO-Beiträge, Ukraine-Hilfe</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-xl hover:translate-x-2 transition-transform">
+                        <div class="flex justify-between items-center mb-3 font-bold">
+                            <span class="text-lg">💸 Zinsen & Schulden</span>
+                            <span class="text-xl text-purple-600">39 Mrd. € (8%)</span>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-8 overflow-hidden">
+                            <div class="budget-bar h-full bg-gradient-to-r from-yellow-400 to-yellow-500 flex items-center justify-end px-4 text-white font-bold" style="width: 8%;">8%</div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Zinsen für Staatsschulden - 39 Mrd. € nur für Zinsen!</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-xl hover:translate-x-2 transition-transform">
+                        <div class="flex justify-between items-center mb-3 font-bold">
+                            <span class="text-lg">🏫 Bildung & Forschung</span>
+                            <span class="text-xl text-purple-600">22 Mrd. € (4.5%)</span>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-8 overflow-hidden">
+                            <div class="budget-bar h-full bg-gradient-to-r from-blue-400 to-blue-500 flex items-center justify-end px-4 text-white font-bold" style="width: 4.5%;">4.5%</div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Schulen, Unis, Forschung - erschreckend wenig!</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-xl hover:translate-x-2 transition-transform">
+                        <div class="flex justify-between items-center mb-3 font-bold">
+                            <span class="text-lg">🏥 Gesundheit</span>
+                            <span class="text-xl text-purple-600">21 Mrd. € (4.3%)</span>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-8 overflow-hidden">
+                            <div class="budget-bar h-full bg-gradient-to-r from-pink-400 to-pink-500 flex items-center justify-end px-4 text-white font-bold" style="width: 4.3%;">4.3%</div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Krankenhäuser, Pflege, Prävention</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-xl hover:translate-x-2 transition-transform">
+                        <div class="flex justify-between items-center mb-3 font-bold">
+                            <span class="text-lg">🌱 Umwelt & Klima</span>
+                            <span class="text-xl text-purple-600">16 Mrd. € (3.3%)</span>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-8 overflow-hidden">
+                            <div class="budget-bar h-full bg-gradient-to-r from-green-400 to-green-500 flex items-center justify-end px-4 text-white font-bold" style="width: 3.3%;">3.3%</div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Klimaschutz, Naturschutz, Erneuerbare Energien</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-red-500 to-red-600 p-8 rounded-3xl text-center text-lg font-bold animate-pulse-slow shadow-2xl">
+                ⚡ SCHOCK-FAKT: Wir geben 3x MEHR für Militär (72 Mrd.) aus als für Bildung (22 Mrd.)!<br>
+                Und für Zinsen (39 Mrd.) geben wir fast doppelt so viel aus wie für Gesundheit (21 Mrd.)!
+            </div>
+        </div>
+
+        <!-- Comparison Content -->
+        <div id="comparison-content" class="tab-content hidden">
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white text-gray-900 p-8 rounded-3xl border-t-4 border-red-500 hover:scale-105 transition-transform">
+                    <div class="text-5xl text-center mb-4">🛡️ vs 🏫</div>
+                    <h3 class="text-2xl font-bold text-center mb-4">1 TAG MILITÄR-BUDGET</h3>
+                    <p class="text-center mb-4"><strong class="text-2xl text-purple-600">197 Mio. € pro Tag</strong></p>
+                    <div class="bg-gradient-to-r from-pink-200 to-purple-200 p-4 rounded-xl">
+                        <p class="font-bold">Könnte finanzieren:</p>
+                        <p>✅ 3.940 neue Lehrer für 1 Jahr</p>
+                        <p>✅ 20 neue Schulen bauen</p>
+                        <p>✅ 100.000 Laptops für Schüler</p>
+                    </div>
+                </div>
+
+                <div class="bg-white text-gray-900 p-8 rounded-3xl border-t-4 border-yellow-500 hover:scale-105 transition-transform">
+                    <div class="text-5xl text-center mb-4">💸 vs 🏥</div>
+                    <h3 class="text-2xl font-bold text-center mb-4">ZINSEN-ERSPARNIS</h3>
+                    <p class="text-center mb-4"><strong class="text-2xl text-purple-600">39 Mrd. € für Zinsen</strong></p>
+                    <div class="bg-gradient-to-r from-blue-200 to-cyan-200 p-4 rounded-xl">
+                        <p class="font-bold">Stattdessen möglich:</p>
+                        <p>✅ Pflege-Personal verdoppeln</p>
+                        <p>✅ 50 neue Krankenhäuser</p>
+                        <p>✅ Kostenlose Kitas bundesweit</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-8 rounded-3xl text-center text-lg font-bold shadow-2xl">
+                💡 NUR 2% UMSCHICHTUNG würde ausreichen um:<br>
+                Pflege zu retten (2 Mrd.) + Bildung zu verdoppeln (22 Mrd.) + Klima zu fördern (10 Mrd.)!
+            </div>
+        </div>
+
+        <!-- Per Citizen Content -->
+        <div id="percitizen-content" class="tab-content hidden">
+            <div class="bg-gradient-to-r from-cyan-400 to-pink-400 text-gray-900 p-10 rounded-3xl text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">👤 WAS ZAHLST DU?</h2>
+                <p class="text-xl mb-2">Pro Bürger (84 Mio. Deutsche):</p>
+                <div class="text-7xl font-bold text-purple-600 my-6">5.810 €</div>
+                <p class="text-lg">So viel vom Bundeshaushalt entfällt auf jeden Deutschen (auch Kinder!)</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white text-gray-900 p-6 rounded-2xl text-center border-t-4 border-green-500">
+                    <div class="text-4xl mb-3">💰</div>
+                    <h3 class="font-bold text-lg mb-2">SOZIALES</h3>
+                    <div class="text-4xl font-bold text-green-600 mb-2">2.095 €</div>
+                    <p class="text-sm text-gray-600">pro Bürger/Jahr</p>
+                </div>
+
+                <div class="bg-white text-gray-900 p-6 rounded-2xl text-center border-t-4 border-red-500">
+                    <div class="text-4xl mb-3">🛡️</div>
+                    <h3 class="font-bold text-lg mb-2">MILITÄR</h3>
+                    <div class="text-4xl font-bold text-red-600 mb-2">857 €</div>
+                    <p class="text-sm text-gray-600">pro Bürger/Jahr</p>
+                </div>
+
+                <div class="bg-white text-gray-900 p-6 rounded-2xl text-center border-t-4 border-blue-500">
+                    <div class="text-4xl mb-3">🏫</div>
+                    <h3 class="font-bold text-lg mb-2">BILDUNG</h3>
+                    <div class="text-4xl font-bold text-blue-600 mb-2">262 €</div>
+                    <p class="text-sm text-gray-600">pro Bürger/Jahr</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-red-500 to-orange-500 p-8 rounded-3xl text-center text-lg font-bold mt-8 shadow-2xl">
+                🤯 DENK MAL DRÜBER NACH:<br>
+                Du zahlst 857€ fürs Militär, aber nur 262€ für Bildung und 250€ für Gesundheit!<br>
+                <strong>Ist das wirklich die Welt, die wir wollen?</strong>
+            </div>
+        </div>
+
+        <!-- Footer CTA -->
+        <div class="bg-gradient-to-r from-purple-600 to-purple-800 p-10 rounded-3xl text-center mt-12">
+            <h2 class="text-4xl font-bold mb-4">🔥 ZEIT FÜR TRANSPARENZ!</h2>
+            <p class="text-xl mb-8">Jetzt weißt du, wohin dein Geld fließt. Teile diese Wahrheiten!</p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <button class="bg-gradient-to-r from-yellow-400 to-yellow-300 text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform">
+                    📥 Report downloaden
+                </button>
+                <button class="bg-gradient-to-r from-pink-400 to-pink-300 text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform">
+                    📱 Freunden zeigen
+                </button>
+            </div>
+            <p class="text-sm mt-6 opacity-75">Quelle: Bundeshaushalt 2025 • Bundesministerium der Finanzen</p>
+        </div>
+    </div>
+
+    <script>
+        function showTab(name) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-yellow-400', 'text-gray-900', 'shadow-lg');
+                btn.classList.add('bg-white/10');
+            });
+            
+            document.getElementById(name + '-content').classList.remove('hidden');
+            event.target.classList.add('bg-yellow-400', 'text-gray-900', 'shadow-lg');
+            event.target.classList.remove('bg-white/10');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.budget-bar').forEach(bar => {
+                    const w = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => bar.style.width = w, 100);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
